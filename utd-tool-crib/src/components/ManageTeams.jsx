@@ -25,6 +25,14 @@ function ManageTeams() {
 
   //const [editTokens, setToken] = useState(0);
 
+  const removeAllUserEvent = (item) => {
+    if (window.confirm("Do you want to remove all teams?")) {
+      axios.post(`http://localhost:${PORT}/teams/removeall/`).then(() => {
+        window.location.reload();
+      });
+    }
+  };
+
   const removeUserEvent = (item) => {
     if (
       window.confirm(
@@ -459,6 +467,9 @@ function ManageTeams() {
           id="file-input"
           onClick={() => inputFile()}
         />
+        <button className="add" onClick={removeAllUserEvent}>
+          Remove All Teams
+        </button>
       </div>
       <div className="grid-2">
         <div id="table-header" className="column-grid-2">

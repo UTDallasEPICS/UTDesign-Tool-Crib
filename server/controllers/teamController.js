@@ -72,7 +72,7 @@ const setTeams = asyncHandler(async (req, res) => {
 @access Private
 */
 
-const deleteTeams = async (req, res) => {
+const deleteTeams = asyncHandler(async (req, res) => {
   // res.status(200).json({message: `deleted team number ${req.params.id}`})
 
   const id = req.params.id
@@ -84,7 +84,17 @@ const deleteTeams = async (req, res) => {
       res.send(`Team ${id} deleted`);
     }
   })
-}
+});
+const deleteAllTeams = asyncHandler(async (req, res) => {
+  queryTeam.query("DELETE FROM manageteams", (err) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      res.send(`everything deleted`);
+    }
+  })
+});
 
 /*
 @desc
@@ -101,4 +111,5 @@ module.exports = {
   setTeams,
   deleteTeams,
   exportTeams,
+  deleteAllTeams
 }
