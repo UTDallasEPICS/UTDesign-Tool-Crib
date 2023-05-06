@@ -33,7 +33,7 @@ mysql : used to interact with the MySQL database and access data.
 
 express-async-handler : used to handle calls to the backend from express the asynch way.
 
-also run npm init -y and npm i once for good measure.
+also cd server.js then run npm init -y and then cd .. back and run npm i once for good measure.
 
 now you've installed everything related to the front end and back end.
 
