@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import "../styles/ManageTools.css";
 import axios from "axios";
 
+const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
+
 function ManageTools() {
   console.log(logo);
 
@@ -13,8 +15,6 @@ function ManageTools() {
   const [addTool, setAdd] = useState(false);
 
   const [toolName, setToolName] = useState("");
-
-  const PORT = 3002;
 
   useEffect(() => {
     async function fetchData() {
@@ -25,7 +25,7 @@ function ManageTools() {
   }, []);
 
   async function getToolData() {
-    axios.get(`http://localhost:${PORT}/tools`).then((resp) => {
+    axios.get(`${API_URL}/tools`).then((resp) => {
       setData(resp.data);
     });
     // fetch("http://localhost:8000/tools")
@@ -50,7 +50,7 @@ function ManageTools() {
 
   const removeUserEvent = (item) => {
     if (window.confirm("Do you want to remove " + item.tool + "?")) {
-      axios.delete(`http://localhost:${PORT}/tools/` + item.id).then(() => {
+      axios.delete(`${API_URL}/tools/` + item.id).then(() => {
         window.location.reload();
       });
       // fetch("http://localhost:8000/tools/" + item.id, {
@@ -67,12 +67,13 @@ function ManageTools() {
   };
 
   const submitToolEvent = (event) => {
+    // eslint-disable-next-line
     const filteredData = data.filter((item) => item.tool == toolName);
     if (filteredData.length > 0) {
       alert("Tool Already Exists");
     } else {
       const toolData = { tool: toolName };
-      axios.post(`http://localhost:${PORT}/tools`, toolData).then(() => {
+      axios.post(`${API_URL}/tools`, toolData).then(() => {
         window.location.reload();
       });
       // fetch("http://localhost:8000/tools", {

@@ -8,6 +8,8 @@ import "../styles/logGrid.css";
 import axios from "axios";
 import { writeFile, utils } from "xlsx";
 
+const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
+
 function Dashboard() {
   console.log(logo);
 
@@ -16,7 +18,6 @@ function Dashboard() {
   const [currentMonth, setMonth] = useState("");
   const [currentYear, setYear] = useState("");
 
-  const PORT = 3002;
   useEffect(() => {
     async function fetchData() {
       await getOrderData();
@@ -52,7 +53,7 @@ function Dashboard() {
   }
 
   async function getOrderData() {
-    axios.get(`http://localhost:${PORT}/logs/`).then((resp) => {
+    axios.get(`${API_URL}/logs/`).then((resp) => {
       setData(resp.data);
     });
     // fetch("http://localhost:8000/logs/")
@@ -68,7 +69,7 @@ function Dashboard() {
   }
 
   const exportLogs = (event) => {
-    axios.post(`http://localhost:${PORT}/logs/export/`).then((resp) => {
+    axios.post(`${API_URL}/logs/export/`).then((resp) => {
       const data = resp.data;
       const workbook = utils.book_new();
       const worksheet = utils.aoa_to_sheet(data);
@@ -108,7 +109,7 @@ function Dashboard() {
           <div className="header-cell">Due Date</div>
           <div className="header-cell">Tool Name</div>
           <div className="header-cell">Notes</div>
-          <div className="header-cell">Tool Limit</div>
+          {/* <div className="header-cell">Tool Limit</div> */}
         </div>
 
         {data &&
@@ -133,9 +134,9 @@ function Dashboard() {
                 <div className="cell">
                   <p style={{ color: "red" }}>{item["notes"]}</p>
                 </div>
-                <div className="cell">
+                {/* <div className="cell">
                   <p style={{ color: "red" }}>{item["toolLimit"]}</p>
-                </div>
+                </div> */}
               </div>
             ) : (
               <div className="column-grid">
@@ -145,7 +146,7 @@ function Dashboard() {
                 <div className="cell">{item["dueDate"]}</div>
                 <div className="cell">{item["toolName"]}</div>
                 <div className="cell">{item["notes"]}</div>
-                <div className="cell">{item["toolLimit"]}</div>
+                {/* <div className="cell">{item["toolLimit"]}</div> */}
               </div>
             )
           )}

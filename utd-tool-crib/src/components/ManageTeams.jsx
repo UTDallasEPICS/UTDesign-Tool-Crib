@@ -6,6 +6,8 @@ import "../styles/manageTeams.css";
 import axios from "axios";
 import { read } from "xlsx";
 
+const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
+
 function ManageTeams() {
   console.log(logo);
 
@@ -17,8 +19,6 @@ function ManageTeams() {
 
   const [currentEditingId, setID] = useState(0);
 
-  const PORT = 3002;
-
   //const [editTeamNumber, setTeamnumber] = useState(0);
 
   //  const [editTeamMembers, setTeammember] = useState([]);
@@ -27,7 +27,7 @@ function ManageTeams() {
 
   const removeAllUserEvent = (item) => {
     if (window.confirm("Do you want to remove all teams?")) {
-      axios.post(`http://localhost:${PORT}/teams/removeall/`).then(() => {
+      axios.post(`${API_URL}/teams/removeall/`).then(() => {
         window.location.reload();
       });
     }
@@ -39,7 +39,7 @@ function ManageTeams() {
         "Do you want to remove team number " + item.teamNumber + "?"
       )
     ) {
-      axios.delete(`http://localhost:${PORT}/teams/` + item.id).then(() => {
+      axios.delete(`${API_URL}/teams/` + item.id).then(() => {
         window.location.reload();
       });
       // fetch("http://localhost:8000/teams/" + item.id, {
@@ -93,7 +93,7 @@ function ManageTeams() {
         tokens: tokenNumber,
       };
 
-      axios.post(`http://localhost:${PORT}/teams/`, teamdata).then(() => {
+      axios.post(`${API_URL}/teams/`, teamdata).then(() => {
         window.location.reload();
       });
       //   fetch("http://localhost:8000/teams", {
@@ -176,7 +176,7 @@ function ManageTeams() {
         id: id,
       };
 
-      axios.put(`http://localhost:${PORT}/teams/`, teamdata).then(() => {
+      axios.put(`${API_URL}/teams/`, teamdata).then(() => {
         window.location.reload();
       });
       //   fetch("http://localhost:8000/teams/" + id, {
@@ -346,7 +346,7 @@ function ManageTeams() {
   };
 
   async function getTeamData() {
-    axios.get(`http://localhost:${PORT}/teams/`).then((resp) => {
+    axios.get(`${API_URL}/teams/`).then((resp) => {
       setData(resp.data);
     });
     // fetch("http://localhost:8000/teams")
@@ -382,7 +382,7 @@ function ManageTeams() {
         ],
         tokens: 5,
       };
-      axios.post(`http://localhost:${PORT}/teams/`, teamData).then(() => {
+      axios.post(`${API_URL}/teams/`, teamData).then(() => {
         window.location.reload();
       });
     }

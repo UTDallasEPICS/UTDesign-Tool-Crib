@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import "../styles/BorrowTools.css";
 import axios from "axios";
 
+const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
+
 function BorrowTool() {
   console.log(logo);
 
@@ -18,8 +20,6 @@ function BorrowTool() {
   const [currentTableNumber, setTableNumber] = useState(-1);
   const [notes, setNotes] = useState("");
   const [dueDate, setDueDate] = useState("");
-
-  const PORT = 3002;
 
   const filterfunction = (event) => {
     let input, filter, div, txtValue, a, i;
@@ -68,7 +68,7 @@ function BorrowTool() {
   }, []);
 
   async function getTeamData() {
-    axios.get(`http://localhost:${PORT}/teams/`).then((resp) => {
+    axios.get(`${API_URL}/teams/`).then((resp) => {
       setTeamData(resp.data);
     });
     // fetch("http://localhost:8000/teams")
@@ -95,7 +95,7 @@ function BorrowTool() {
       notes: notes,
     };
 
-    axios.post(`http://localhost:${PORT}/logs/`, logData).then((resp) => {
+    axios.post(`${API_URL}/logs/`, logData).then((resp) => {
       window.location.reload();
     });
 
@@ -111,6 +111,7 @@ function BorrowTool() {
     //     console.log(err.message);
     //   });
 
+    // eslint-disable-next-line
     const currentTeam = teamData.filter((item) => item.teamNumber == teamNum);
     const currentTeamData = {
       teamNumber: currentTeam[0].teamNumber,
@@ -120,7 +121,7 @@ function BorrowTool() {
       id: currentTeam[0].id,
     };
 
-    axios.put(`http://localhost:${PORT}/teams/`, currentTeamData).then(() => {
+    axios.put(`${API_URL}/teams/`, currentTeamData).then(() => {
       window.location.reload();
     });
     // fetch("http://localhost:8000/teams/" + currentTeam[0].id, {
@@ -133,7 +134,7 @@ function BorrowTool() {
   };
 
   async function getToolData() {
-    axios.get(`http://localhost:${PORT}/tools`).then((resp) => {
+    axios.get(`${API_URL}/tools`).then((resp) => {
       setToolData(resp.data);
     });
     // fetch("http://localhost:8000/tools")
@@ -153,6 +154,7 @@ function BorrowTool() {
   const refactorData = (num) => {
     if (num > 0) {
       setTeamNum(num);
+      // eslint-disable-next-line
       const currentTeam = teamData.filter((item) => item.teamNumber == num);
       if (currentTeam.length > 0) {
         setTeamMembers(convertString(currentTeam[0].teamMembers));
@@ -278,7 +280,7 @@ function BorrowTool() {
             onChange={(event) => setDueDate(event.target.value)}
           />
           <Link to="/">
-            <button
+            <button disabled={currentToolLimit > 0 ? false : true}
               className="submit"
               onClick={() => {
                 submitLogEvent();

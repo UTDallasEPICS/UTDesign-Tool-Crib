@@ -2,21 +2,21 @@ import { Link } from "react-router-dom";
 import "../styles/header.css";
 import "../styles/ReturnTool.css";
 import logo from "../styles/logo.svg";
-import orderData from "../data/db.json";
+// import orderData from "../data/db.json";
 import { useState, useEffect } from "react";
 import axios from "axios";
 //import myFunction from "../scripts/returnTools.js"
+
+const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
 
 function ReturnTool() {
   console.log(logo);
 
   const [data, setData] = useState([]);
 
-  const [teamnumber, setNumber] = useState(-1);
+  const [, setNumber] = useState(-1);
 
   const [items, setItem] = useState([]);
-
-  const PORT = 3002;
 
   useEffect(() => {
     async function fetchData() {
@@ -31,7 +31,7 @@ function ReturnTool() {
         document.getElementById(items[i].toolName) &&
         document.getElementById(items[i].toolName).checked
       ) {
-        axios.delete(`http://localhost:${PORT}/logs/` + items[i].id);
+        axios.delete(`${API_URL}/logs/` + items[i].id);
         // fetch("http://localhost:8000/logs/" + items[i].id, {
         //   method: "DELETE",
         // }).catch((err) => {
@@ -44,6 +44,7 @@ function ReturnTool() {
   const handleEnterData = (event) => {
     setNumber(event.target.value);
     const filteredData = data.filter(
+      // eslint-disable-next-line
       (entry) => entry["teamNumber"] == event.target.value
     );
     if (filteredData.length > 0) {
@@ -67,7 +68,7 @@ function ReturnTool() {
   // }
 
   async function getOrderData() {
-    axios.get(`http://localhost:${PORT}/logs/`).then((resp) => {
+    axios.get(`${API_URL}/logs/`).then((resp) => {
       setData(resp.data);
     });
     // fetch(`http://localhost:${PORT}/logs/`)

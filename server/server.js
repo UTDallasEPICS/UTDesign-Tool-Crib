@@ -2,6 +2,8 @@ const express = require("express");
 const mysql = require('mysql');
 const PORT = 3002;
 const cors = require('cors');
+// const https = require("https");
+// const fs = require("fs");
 
 const app = express();
 
@@ -20,3 +22,11 @@ app.use('/logs', require('./routes/logRoutes'));
 app.listen(PORT, () => {
   console.log(`Yay you're port is running on ${PORT}`);
 });
+// https.createServer(
+//   {
+//     key: fs.readFileSync("key.pem"),
+//     cert: fs.readFileSync("cert.pem"),
+//   },
+//   app).listen(PORT, ()=>{
+//   console.log(`Yay you're port is running on ${PORT}`)
+// });

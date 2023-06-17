@@ -151,6 +151,14 @@ const removeLogs = asyncHandler(async (req, res) => {
                     
                 }
             });
+            queryLogs.query("UPDATE manageteams SET tokens = tokens + 1 WHERE teamNumber = ?", [result[0].teamNumber], (err, result) => {
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    
+                }
+            });
         }
     })
     queryLogs.query("DELETE FROM managelogs WHERE id = ?",  id, (err) => {
@@ -161,7 +169,6 @@ const removeLogs = asyncHandler(async (req, res) => {
             res.send("deleted log " + id);
         }
     });
-    
 });
 
 const exportLogs = asyncHandler(async (req, res) => {
