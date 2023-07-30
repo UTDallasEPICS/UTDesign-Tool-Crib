@@ -6,10 +6,14 @@ import logo from "../styles/logo.svg";
 import { useState, useEffect } from "react";
 import axios from "axios";
 //import myFunction from "../scripts/returnTools.js"
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./LoginButton";
 
 const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
 
 function ReturnTool() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   console.log(logo);
 
   const [data, setData] = useState([]);
@@ -31,7 +35,21 @@ function ReturnTool() {
         document.getElementById(items[i].toolName) &&
         document.getElementById(items[i].toolName).checked
       ) {
-        axios.delete(`${API_URL}/logs/` + items[i].id);
+        const accessToken =getAccessTokenSilently();
+        const options = { 
+          method: "DELETE",
+          url: `${API_URL}/logs/` + items[i].id,
+          headers: { "authorization": `Bearer ${accessToken}`},
+        };
+
+        axios(options)
+          .then((resp) => {
+            
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        // axios.delete(`${API_URL}/logs/` + items[i].id);
         // fetch("http://localhost:8000/logs/" + items[i].id, {
         //   method: "DELETE",
         // }).catch((err) => {
@@ -68,9 +86,23 @@ function ReturnTool() {
   // }
 
   async function getOrderData() {
-    axios.get(`${API_URL}/logs/`).then((resp) => {
-      setData(resp.data);
-    });
+    const accessToken = await getAccessTokenSilently();
+    const options = { 
+      method: "GET",
+      url: `${API_URL}/logs/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+    };
+
+    axios(options)
+      .then((resp) => {
+        setData(resp.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // axios.get(`${API_URL}/logs/`).then((resp) => {
+    //   setData(resp.data);
+    // });
     // fetch(`http://localhost:${PORT}/logs/`)
     //   .then((res) => {
     //     return res.json();
@@ -84,6 +116,8 @@ function ReturnTool() {
   }
   return (
     <div className="return-tool">
+      {!isAuthenticated && <LoginButton/>}
+      {isAuthenticated && (
       <div className="header">
         <div className="title">
         <img src={logo} alt="" />
@@ -96,7 +130,9 @@ function ReturnTool() {
           </Link>
         </div>
       </div>
+      )}
 
+      {isAuthenticated && (
       <center>
         <div className="input-box">
           <div>
@@ -121,6 +157,7 @@ function ReturnTool() {
           </div>
         </div>
       </center>
+      )}
     </div>
   );
 }

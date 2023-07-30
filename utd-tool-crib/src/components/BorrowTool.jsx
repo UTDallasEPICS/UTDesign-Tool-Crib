@@ -4,10 +4,14 @@ import logo from "../styles/logo.svg";
 import { useState, useEffect } from "react";
 import "../styles/BorrowTools.css";
 import axios from "axios";
+import LoginButton from "./LoginButton";
+import Profile from "./Profile";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
 
 function BorrowTool() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(logo);
 
   const [teamData, setTeamData] = useState([]);
@@ -20,6 +24,8 @@ function BorrowTool() {
   const [currentTableNumber, setTableNumber] = useState(-1);
   const [notes, setNotes] = useState("");
   const [dueDate, setDueDate] = useState("");
+
+  const {getAccessTokenSilently} = useAuth0();
 
   const filterfunction = (event) => {
     let input, filter, div, txtValue, a, i;
@@ -68,19 +74,20 @@ function BorrowTool() {
   }, []);
 
   async function getTeamData() {
-    axios.get(`${API_URL}/teams/`).then((resp) => {
-      setTeamData(resp.data);
-    });
-    // fetch("http://localhost:8000/teams")
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((resp) => {
-    //     setTeamData(resp);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
+    const accessToken = await getAccessTokenSilently();
+    const options = { 
+      method: "GET",
+      url: `${API_URL}/teams/`,
+      headers: { "authorization": `Bearer ${accessToken}` },
+    };
+
+    axios(options)
+      .then((resp) => {
+        setTeamData(resp.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const submitLogEvent = (event) => {
@@ -95,9 +102,25 @@ function BorrowTool() {
       notes: notes,
     };
 
-    axios.post(`${API_URL}/logs/`, logData).then((resp) => {
-      window.location.reload();
-    });
+    const accessToken =getAccessTokenSilently();
+    var options = { 
+      method: "POST",
+      url: `${API_URL}/logs/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+      data: logData,
+    };
+
+    axios(options)
+      .then((resp) => {
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // axios.post(`${API_URL}/logs/`, logData, config).then((resp) => {
+    //   window.location.reload();
+    // });
 
     // fetch("http://localhost:8000/logs", {
     //   method: "POST",
@@ -121,9 +144,24 @@ function BorrowTool() {
       id: currentTeam[0].id,
     };
 
-    axios.put(`${API_URL}/teams/`, currentTeamData).then(() => {
-      window.location.reload();
-    });
+    options = { 
+      method: "PUT",
+      url: `${API_URL}/teams/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+      data: currentTeamData,
+    };
+
+    axios(options)
+      .then((resp) => {
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // axios.put(`${API_URL}/teams/`, currentTeamData, config).then(() => {
+    //   window.location.reload();
+    // });
     // fetch("http://localhost:8000/teams/" + currentTeam[0].id, {
     //   method: "PUT",
     //   headers: { "content-type": "application/json" },
@@ -134,9 +172,23 @@ function BorrowTool() {
   };
 
   async function getToolData() {
-    axios.get(`${API_URL}/tools`).then((resp) => {
-      setToolData(resp.data);
-    });
+    const accessToken =getAccessTokenSilently();
+    const options = { 
+      method: "GET",
+      url: `${API_URL}/tools`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+    };
+
+    axios(options)
+      .then((resp) => {
+        setToolData(resp.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // axios.get(`${API_URL}/tools`, config).then((resp) => {
+    //   setToolData(resp.data);
+    // });
     // fetch("http://localhost:8000/tools")
     //   .then((res) => {
     //     return res.json();
@@ -183,6 +235,8 @@ function BorrowTool() {
         </div>
       </div>
       <center>
+      {!isAuthenticated && <LoginButton/>}
+      {isAuthenticated && (
         <div className="input-box">
           <label>Team Number</label>
           <input
@@ -290,8 +344,11 @@ function BorrowTool() {
             </button>
           </Link>
         </div>
+        )}
       </center>
     </div>
+    
+  
   );
 }
 export default BorrowTool;

@@ -7,10 +7,17 @@ import { useEffect, useState } from "react";
 import "../styles/logGrid.css";
 import axios from "axios";
 import { writeFile, utils } from "xlsx";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import Profile from "./Profile";
 
 const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
 
 function Dashboard() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
+  
   console.log(logo);
 
   const [data, setData] = useState([]);
@@ -53,29 +60,41 @@ function Dashboard() {
   }
 
   async function getOrderData() {
-    axios.get(`${API_URL}/logs/`).then((resp) => {
-      setData(resp.data);
-    });
-    // fetch("http://localhost:8000/logs/")
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((resp) => {
-    //     setData(resp);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.message);
-    //   });
+    const accessToken = await getAccessTokenSilently();
+
+    const options = { 
+      method: "GET",
+      url: `${API_URL}/logs/`,
+      headers: { "authorization": `Bearer ${accessToken}` },
+    };
+    
+    axios(options)
+      .then((resp) => {
+          setData(resp.data);
+        })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const exportLogs = (event) => {
-    axios.post(`${API_URL}/logs/export/`).then((resp) => {
-      const data = resp.data;
-      const workbook = utils.book_new();
-      const worksheet = utils.aoa_to_sheet(data);
-      utils.book_append_sheet(workbook, worksheet, "Sheet1");
-      writeFile(workbook, "output.xlsx");
-    });
+    const accessToken = getAccessTokenSilently();
+    const options = { 
+      method: "POST",
+      url: `${API_URL}/logs/export/`,
+      headers: { "authorization": `Bearer ${accessToken}` },
+    };
+    axios(options)
+      .then((resp) => {
+        const data = resp.data;
+        const workbook = utils.book_new();
+        const worksheet = utils.aoa_to_sheet(data);
+        utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        writeFile(workbook, "output.xlsx");
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   return (
     <div className="dashboard">
@@ -95,12 +114,16 @@ function Dashboard() {
           <Link to="/Manage-Teams">
             <button>Admin Panel</button>
           </Link>
-          <button>Log Out</button>
+          <LogoutButton/>
         </div>
       </div>
+      {!isAuthenticated && <LoginButton/>}
+      {isAuthenticated && (
       <div>
         <button className="export" onClick={exportLogs}>Export Log History</button>
-      </div>
+      </div> )}
+      {isAuthenticated && (
+      
       <div className="grid">
         <div className="column-grid-header">
           <div className="header-cell">Team Number</div>
@@ -151,6 +174,7 @@ function Dashboard() {
             )
           )}
       </div>
+      )}
     </div>
   );
 }

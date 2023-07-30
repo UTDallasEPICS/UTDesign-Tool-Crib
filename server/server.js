@@ -2,10 +2,17 @@ const express = require("express");
 const mysql = require('mysql');
 const PORT = 3002;
 const cors = require('cors');
-// const https = require("https");
-// const fs = require("fs");
+const { auth } = require('express-oauth2-jwt-bearer');
 
 const app = express();
+
+const jwtCheck = auth({
+  audience: 'https://toolcrib-api.mstolen.com',
+  issuerBaseURL: 'https://utdesign-toolcrib.us.auth0.com/',
+  tokenSigningAlg: 'RS256'
+});
+
+app.use(jwtCheck);
 
 app.use(cors());
 app.use(express.json());

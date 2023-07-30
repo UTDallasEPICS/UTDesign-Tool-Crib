@@ -5,10 +5,13 @@ import logo from "../styles/logo.svg";
 import "../styles/manageTeams.css";
 import axios from "axios";
 import { read } from "xlsx";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./LoginButton";
 
 const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
 
 function ManageTeams() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(logo);
 
   const [counter, setCounter] = useState(1);
@@ -18,6 +21,8 @@ function ManageTeams() {
   const [addUser, setAdd] = useState(false);
 
   const [currentEditingId, setID] = useState(0);
+
+  const {getAccessTokenSilently} = useAuth0();
 
   //const [editTeamNumber, setTeamnumber] = useState(0);
 
@@ -346,9 +351,24 @@ function ManageTeams() {
   };
 
   async function getTeamData() {
-    axios.get(`${API_URL}/teams/`).then((resp) => {
-      setData(resp.data);
-    });
+    const accessToken =getAccessTokenSilently();
+    const options = { 
+      method: "GET",
+      url: `${API_URL}/teams/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+    };
+
+    axios(options)
+      .then((resp) => {
+        setData(resp.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // axios.get(`${API_URL}/teams/`).then((resp) => {
+    //   setData(resp.data);
+    // });
     // fetch("http://localhost:8000/teams")
     //   .then((res) => {
     //     return res.json();
@@ -382,9 +402,25 @@ function ManageTeams() {
         ],
         tokens: 5,
       };
-      axios.post(`${API_URL}/teams/`, teamData).then(() => {
+      const accessToken =getAccessTokenSilently();
+    const options = { 
+      method: "POST",
+      url: `${API_URL}/teams/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+      data: teamData ,
+    };
+
+    axios(options)
+      .then((resp) => {
         window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
       });
+
+      // axios.post(`${API_URL}/teams/`, teamData).then(() => {
+      //   window.location.reload();
+      // });
     }
     // console.log(arr);
     // sheet.forEach(myFunction);
@@ -458,8 +494,11 @@ function ManageTeams() {
           </Link>
         </div>
       </div>
-
-      <div className="manage-teams-bttns">{addUserHtml()}</div>
+      {!isAuthenticated && <LoginButton/>}
+      {isAuthenticated && user["http://localhost:3000/roles"].toString()==="Admin" &&(
+        <div className="manage-teams-bttns">{addUserHtml()}</div>
+      )}
+      {isAuthenticated && user["http://localhost:3000/roles"].toString()==="Admin" && (
       <div>
         <input
           className="manage-teams-bttns"
@@ -471,6 +510,8 @@ function ManageTeams() {
           Remove All Teams
         </button>
       </div>
+      )}
+      {isAuthenticated && user["http://localhost:3000/roles"].toString()==="Admin" && (
       <div className="grid-2">
         <div id="table-header" className="column-grid-2">
           <div className="cell">Team Number</div>
@@ -511,6 +552,7 @@ function ManageTeams() {
             </div>
           ))} */}
       </div>
+      )}
     </div>
   );
 }

@@ -4,10 +4,14 @@ import logo from "../styles/logo.svg";
 import { useState, useEffect } from "react";
 import "../styles/ManageTools.css";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./LoginButton";
 
 const API_URL = `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_API_PORT}`
 
 function ManageTools() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const {getAccessTokenSilently} = useAuth0();
   console.log(logo);
 
   const [data, setData] = useState([]);
@@ -25,9 +29,23 @@ function ManageTools() {
   }, []);
 
   async function getToolData() {
-    axios.get(`${API_URL}/tools`).then((resp) => {
-      setData(resp.data);
-    });
+    const accessToken =getAccessTokenSilently();
+    const options = { 
+      method: "GET",
+      url: `${API_URL}/tools/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+    };
+
+    axios(options)
+      .then((resp) => {
+        setData(resp.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    // axios.get(`${API_URL}/tools`).then((resp) => {
+    //   setData(resp.data);
+    // });
     // fetch("http://localhost:8000/tools")
     //   .then((res) => {
     //     return res.json();
@@ -50,9 +68,23 @@ function ManageTools() {
 
   const removeUserEvent = (item) => {
     if (window.confirm("Do you want to remove " + item.tool + "?")) {
-      axios.delete(`${API_URL}/tools/` + item.id).then(() => {
+      const accessToken =getAccessTokenSilently();
+    const options = { 
+      method: "DELETE",
+      url: `${API_URL}/tools/` + item.id,
+      headers: { "authorization": `Bearer ${accessToken}`},
+    };
+
+    axios(options)
+      .then((resp) => {
         window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
       });
+      // axios.delete(`${API_URL}/tools/` + item.id).then(() => {
+      //   window.location.reload();
+      // });
       // fetch("http://localhost:8000/tools/" + item.id, {
       //   method: "DELETE",
       // })
@@ -72,10 +104,25 @@ function ManageTools() {
     if (filteredData.length > 0) {
       alert("Tool Already Exists");
     } else {
-      const toolData = { tool: toolName };
-      axios.post(`${API_URL}/tools`, toolData).then(() => {
+    const toolData = { tool: toolName };
+    const accessToken =getAccessTokenSilently();
+    const options = { 
+      method: "POST",
+      url: `${API_URL}/logs/`,
+      headers: { "authorization": `Bearer ${accessToken}`},
+      data: toolData,
+    };
+
+    axios(options)
+      .then((resp) => {
         window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
       });
+      // axios.post(`${API_URL}/tools`, toolData).then(() => {
+      //   window.location.reload();
+      // });
       // fetch("http://localhost:8000/tools", {
       //   method: "POST",
       //   headers: { "content-type": "application/json" },
@@ -116,6 +163,8 @@ function ManageTools() {
   };
   return (
     <div className="manage-tools">
+      {!isAuthenticated && <LoginButton/>}
+      {isAuthenticated && user["http://localhost:3000/roles"].toString()==="Admin" && (
       <div className="header">
         <div className="title">
         <img src={logo} alt="" />
@@ -134,7 +183,11 @@ function ManageTools() {
           </Link>
         </div>
       </div>
+      )}
+      {isAuthenticated && user["http://localhost:3000/roles"].toString() === "Admin" && (
       <div className="add-button">{addToolHtml()}</div>
+      )}
+      {isAuthenticated && user["http://localhost:3000/roles"].toString() === "Admin" && (
       <div className="grid-3">
         <div className="column-grid-header">
           <div className="header-cell">Tool</div>
@@ -158,6 +211,7 @@ function ManageTools() {
             </div>
           ))}
       </div>
+      )}
     </div>
   );
 }
