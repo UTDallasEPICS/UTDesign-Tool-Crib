@@ -1,0 +1,265 @@
+#manage-teams-button{
+    color: black;
+}
+
+hr {
+    border: 2px solid #e87500;
+    width: 26%;
+    border-radius: 10px;
+    margin-left: 0;
+}
+
+.manage-teams-bttns{
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.add {
+    background-color: white;
+    border: none;
+    font-size: larger;
+    font-weight: bold;
+    color: #154734;
+    transition: all 0.15s;
+}
+
+.add:hover {
+    cursor: pointer;
+    color: #e87500;
+    text-decoration: underline;
+}
+
+
+.add-input-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-2{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    row-gap: 0;
+}
+
+#table-header {
+    background-color: #154734;
+    color: white;
+}
+
+.column-grid-2{
+    display: grid;
+    grid-template-columns: 0.8fr 0.8fr 4fr 0.8fr 0.5fr;
+    row-gap: 0;
+}
+
+.cell {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #154734;
+    padding: 5px;
+    text-align: center;
+}
+
+.column-grid-2 button {
+    background-color: white;
+    color: #154734;
+    border: none;
+    margin-bottom: 5px;
+    transition: all 0.15s;
+}
+
+.column-grid-2 button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: red;
+}
+
+.add-user {
+    background-color: white;
+    border: none;
+    font-size: larger;
+    font-weight: bold;
+    color: #154734;
+    transition: all 0.15s;
+}
+
+.add-user:hover {
+    cursor: pointer;
+    color: #e87500;
+    text-decoration: underline;
+}
+
+.cell-2{
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    padding: 10px;
+    min-width: fit-content;
+    padding: 15px;
+}
+
+.single-row{
+    display: flex;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    column-gap: 5px;
+    padding-left: 5px;
+}
+
+#new-member {
+    font-size: large;
+    width: 25px;
+    height: 25px;
+}
+
+#new-member:hover {
+    text-decoration: none;
+}
+
+input[type="file"] {
+    color: #154734;
+    border: 3px dashed #154734;
+    padding: 5px;
+    border-radius: 25px;
+    transition: all 0.15s;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #154734;
+    color: white;
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    border-radius: 25px;
+    transition: all 0.15s;
+}
+
+input[type="file"]:hover {
+    cursor: pointer;
+    border-color: #0e2f23;
+    color: #0e2f23;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #0e2f23;
+    cursor: pointer;
+} 
+
+/* .editing-team-members-container{
+    contain: ;
+} */
+
+.edit {
+    max-width: 110px;
+}
+
+#manage-teams-button{
+    color: black;
+}
+
+.grid-3{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.grid-3 .column-grid-header {
+    grid-template-columns: 1fr 1fr;
+}
+
+.column-grid-3{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    color: #154734;
+}
+
+.column-grid-3 button {
+    background-color: white;
+    border: none;
+    color: #154734;
+    transition: all 0.15s;
+}
+
+.column-grid-3 button:hover {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.cell-2{
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+}
+
+.add-button {
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.add {
+    background-color: white;
+    border: none;
+    font-size: larger;
+    font-weight: bold;
+    color: #154734;
+    transition: all 0.15s;
+}
+
+.add:hover {
+    cursor: pointer;
+    color: #e87500;
+    text-decoration: underline;
+}
+
+.add-input-box h2 {
+    color: #e87500;
+    font-weight: bold;
+}
+
+.add-input-box p {
+    font-weight: bold;
+    color: #154734;
+}
+
+.add-input-box input {
+    height: 25px;
+    width: 25%;
+    margin-bottom: 25px;
+    padding: 5px;
+}
+
+.add-bttn {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-input-box button {
+    background-color: #154734;
+    color: white;
+    margin-bottom: 25px;
+    width: 26%;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.15s;
+}
+
+.add-input-box button:hover {
+    text-decoration: underline;
+    background-color: #0e2f23;
+    cursor: pointer;
+}

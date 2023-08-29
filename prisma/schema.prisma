@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Log {
+  id           Int       @id @default(autoincrement())
+  dateCreated  DateTime  @default(now())
+  dateDue      DateTime
+  dateReturned DateTime?
+  notes        String?   @db.Text
+  isReturned   Boolean   @default(false)
+  // Relations
+  team         Team      @relation(fields: [teamId], references: [id])
+  teamId       Int
+  teamMember   Student   @relation(fields: [studentId], references: [id])
+  studentId    Int
+  tool         Tool      @relation(fields: [toolId], references: [id])
+  toolId       Int
+}
+
+model Team {
+  id          Int       @id @default(autoincrement())
+  teamNumber  String    @unique
+  tableNumber Int
+  tokens      Int       @default(5)
+  tokensUsed  Int       @default(0)
+  isActive    Boolean   @default(true)
+  // Relations
+  teamMembers Student[]
+  logEntries  Log[]
+}
+
+model Tool {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.Text
+  isActive   Boolean @default(true)
+  logEntries Log[]
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  isActive Boolean @default(true)
+  isAdmin  Boolean @default(false)
+}
+
+model Student {
+  id         Int    @id @default(autoincrement())
+  name       String
+  team       Team   @relation(fields: [teamId], references: [id])
+  teamId     Int
+  logEntries Log[]
+}

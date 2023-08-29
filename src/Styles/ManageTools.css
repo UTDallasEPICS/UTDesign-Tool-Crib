@@ -1,0 +1,124 @@
+#manage-tools-button{
+    color: black;
+}
+
+.grid-3{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.grid-3 .column-grid-header {
+    grid-template-columns: 1fr 1fr;
+}
+
+.column-grid-3{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    color: #154734;
+}
+
+.column-grid-3 button {
+    background-color: white;
+    border: none;
+    color: #154734;
+    transition: all 0.15s;
+}
+
+.column-grid-3 button:hover {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.cell-2{
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+}
+
+.add-button {
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.add {
+    background-color: white;
+    border: none;
+    font-size: larger;
+    font-weight: bold;
+    color: #154734;
+    transition: all 0.15s;
+}
+
+.add:hover {
+    cursor: pointer;
+    color: #e87500;
+    text-decoration: underline;
+}
+
+.add-input-box h2 {
+    color: #e87500;
+    font-weight: bold;
+}
+
+.add-input-box p {
+    font-weight: bold;
+    color: #154734;
+}
+
+.add-input-box input {
+    height: 25px;
+    width: 25%;
+    margin-bottom: 25px;
+    padding: 5px;
+}
+
+.add-bttn {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-input-box button {
+    background-color: #154734;
+    color: white;
+    margin-bottom: 25px;
+    width: 26%;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.15s;
+}
+
+.add-input-box button:hover {
+    text-decoration: underline;
+    background-color: #0e2f23;
+    cursor: pointer;
+}
+
+.column-grid-header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;/* 1fr;*/  
+    background-color: #154734;
+    color: white;
+}
+
+.header-cell{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #154734;
+    padding: 5px;
+    text-align: center;
+}
+
+.cell {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #154734;
+    padding: 5px;
+    text-align: center;
+}

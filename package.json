@@ -6,13 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prismaPull": "dotenv -e .env.local prisma db pull",
+    "prismaMigrate": "dotenv -e .env.local prisma migrate dev",
+    "prismaPush": "dotenv -e .env.local prisma db push",
+    "prismaValidate": "dotenv -e .env.local prisma validate",
+    "prismaGenerate": "dotenv -e .env.local prisma generate"
   },
   "dependencies": {
-    "eslint": "8.46.0",
-    "eslint-config-next": "13.4.12",
-    "next": "13.4.12",
+    "@auth0/nextjs-auth0": "^3.1.0",
+    "@prisma/client": "5.1.1",
+    "dotenv-cli": "^7.2.1",
+    "eslint": "^8.47.0",
+    "eslint-config-next": "~13.4.16",
+    "next": "~13.4.16",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-date-picker": "^10.5.0",
+    "react-dom": "18.2.0",
+    "swr": "^2.2.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "prisma": "^5.1.1"
   }
 }
