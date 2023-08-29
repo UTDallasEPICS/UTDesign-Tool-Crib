@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function POST(request) {
     const {log} = await request.json()
     const res = await prisma.log.create({

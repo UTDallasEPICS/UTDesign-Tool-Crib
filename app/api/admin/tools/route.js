@@ -19,6 +19,9 @@ import prisma from '@/app/lib/prisma';
 //     return NextResponse.json({data})
 // }
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function POST(request) {
     const {name} = await request.json()
     let res

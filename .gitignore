@@ -36,3 +36,9 @@ next-env.d.ts
 
 # Database files
 db_files/
+
+
+# In development docker implementation files
+docker-compose.prod.yml
+Dockerfile
+.dockerignore
