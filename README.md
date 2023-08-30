@@ -1,8 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# UTDesign Toolcrib Inventory Tracker
 
-## Getting Started
+## Prerequisites
 
-First, run the development server:
+### auth0
+
+This project uses [auth0](https://auth0.com) for user authentication. You will need a free account and a little bit of setup to start. It is recommended following [this guide](https://auth0.com/docs/quickstart/webapp/nextjs/01-login) to get started. The `.env.local` file mentioned in the guide is explained in a bit more detail in the next section.
+
+### .env.local
+
+There is a `.env.local` file that needs to be configured before running anything. Copy/rename `env.local.example` to `.env.local` and fill in the required auth0 and MySQL database information
+
+## Starting the Database database
+
+To run the database, docker compose needs to be installed. Follow the steps at [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/) if you need help. You can then run the following command to start the MySQL database.
+
+```bash
+docker compose up -d
+```
+
+## Running the development server
+
+### Installing packages
+
+Before running the server, all packages need to be installed:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### Configure Prisma Client
+
+Next, ensure [Prisma](https://www.prisma.io) is configured correctly:
+
+```bash
+npm prismaPush
+# or
+pnpm prismaPush
+```
+
+### Start Development Server
+
+Finally, run the development server:
 
 ```bash
 npm run dev
@@ -14,11 +56,9 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+You can start editing any of the files and when they are saved, the development server will automatically update them
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
+## Learn More About Next.js
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -26,9 +66,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
