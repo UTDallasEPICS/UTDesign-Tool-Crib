@@ -20,6 +20,57 @@ export async function GET() {
     return NextResponse.json({data})
 }
 
+export async function PATCH(request) {
+    const {team} = await request.json()
+    console.log(team)
+    // const currentTeam = await prisma.team.findUnique({
+    //     where: {
+    //         id: team.teamId
+    //     },
+    //     include: {
+    //         teamMembers: true
+    //     }
+    // })
+    // const memberIds = currentTeam.teamMembers.map(a => a.id)
+    // console.log(memberIds)
+
+    // team.removeMembers.forEach(student => {
+    const studentRemoveRes = await  prisma.student.updateMany({
+        where: {
+            id: {
+                in: team.removeMembers
+            }
+        },
+        data: {
+            teamId: null
+        }
+    })
+    // console.log(studentRemoveRes)
+    // });
+    let newMembers = []
+    team.newMembers.forEach(student => {
+        newMembers.push({
+            name: student,
+            teamId: team.teamId
+        })
+    })
+    const newStudentRes = await prisma.student.createMany({
+        data: newMembers
+    })
+    // console.log(newStudentRes)
+    const teamRes = await prisma.team.update({
+        where: {
+            id: team.teamId
+        },
+        data: {
+            tableNumber: team.tableNumber,
+            tokens: team.tokens
+        }
+    })
+
+    return NextResponse.json({newTeam:teamRes, membersAdded: newStudentRes, membersRemoved: studentRemoveRes})
+}
+
 export async function POST(request) {
     const {team} = await request.json()
     console.log(team)

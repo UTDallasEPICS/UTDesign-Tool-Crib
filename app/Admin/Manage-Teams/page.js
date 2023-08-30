@@ -68,7 +68,7 @@ export default withPageAuthRequired( function ManageTeams() {
       let tableNumber = Number(document.getElementById("tablenumber").value);
       let tokenNumber = Number(document.getElementById("tokennumber").value);
 
-      const teamdata = {
+      const teamData = {
         teamNumber: teamNumber,
         tableNumber: tableNumber,
         teamMembers: teamMembersValues,
@@ -78,7 +78,7 @@ export default withPageAuthRequired( function ManageTeams() {
       const res = fetch("/api/admin/teams", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({team: teamdata})
+        body: JSON.stringify({team: teamData})
       })
     }
     setAdd(!addUser);
@@ -309,7 +309,7 @@ export default withPageAuthRequired( function ManageTeams() {
     let sheet = workbook.Sheets[workbook.SheetNames[0]]
     const arr = utils.sheet_to_json(sheet, {headers: 1})
     // const arr = Object.values(sheet);
-    console.log(arr)
+    // console.log(arr)
     
     for (let row in arr) {
       const teamNumber = String(arr[row]["Team Number"])
@@ -323,8 +323,9 @@ export default withPageAuthRequired( function ManageTeams() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({team: newTeamData})
       })
-      console.log(res)
+      // console.log(res)
     }
+    window.location.reload()
   }
 
   const inputFile = (e) => {
@@ -362,7 +363,7 @@ export default withPageAuthRequired( function ManageTeams() {
         {/* {editUserHtml(currentEditingId)} */}
         {isLoading ? "Loading..." :
           teamData.data.map((item) => (
-            item.id === currentEditingId ? <EditUser userData={item} key={item.id}/> : 
+            item.id === currentEditingId ? <EditUser userData={item} setEditId={setID} mutateTeams={mutate} key={item.id}/> : 
             <div className="column-grid-2" id={item.id + "div"} key={item.id}>
               <div className="cell-2" id={item.id + "number"}>
                 {item.teamNumber}
@@ -378,6 +379,7 @@ export default withPageAuthRequired( function ManageTeams() {
               <div className="cell-2">
                 <button
                   onClick={() => {
+                    console.log(item.id)
                     editUserEvent(item.id);
                   }}
                 >
