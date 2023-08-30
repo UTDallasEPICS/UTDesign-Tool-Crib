@@ -65,7 +65,7 @@ export default withPageAuthRequired(
           teamMembersValues.push(input.value);
         });
 
-        let teamNumber = Number(document.getElementById("teamnumber").value);
+        let teamNumber = String(document.getElementById("teamnumber").value);
         let tableNumber = Number(document.getElementById("tablenumber").value);
         let tokenNumber = Number(document.getElementById("tokennumber").value);
 
