@@ -1,31 +1,31 @@
 .header-bttns {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 10px;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 10px;
 }
 
 button {
-    margin: 5px;
-    padding: 10px;
-    width: flex;
-    height: flex;
-    background-color: #154734;
-    color: #EDF2F4;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    border-width: 0;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
+  margin: 5px;
+  padding: 10px;
+  width: flex;
+  height: flex;
+  background-color: #154734;
+  color: #edf2f4;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border-width: 0;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
 }
 
 button:hover {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.75);
-    cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }

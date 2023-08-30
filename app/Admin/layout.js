@@ -1,15 +1,15 @@
-import logo from "../../src/Styles/logo.svg"
-import "../../src/Styles/header.css"
-import Image from "next/image"
-import Link from "next/link"
+import logo from "../../src/Styles/logo.svg";
+import "../../src/Styles/header.css";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AdminLayout({ children }) {
-    return (
-      <div>
+  return (
+    <div>
       <div className="header">
         <div className="title">
-        <Image src={logo} alt="" />
-        <h1>Admin Panel</h1>
+          <Image src={logo} alt="" />
+          <h1>Admin Panel</h1>
         </div>
         <div className="header-buttons">
           <Link href="Manage-Teams">
@@ -25,6 +25,6 @@ export default function AdminLayout({ children }) {
         </div>
       </div>
       {children}
-      </div>
-    )
+    </div>
+  );
 }
