@@ -16,7 +16,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
     // }
     // res.cookies.set('hl', user.language);
     
-    if (user.user["http://localhost:3000/roles"].includes('Admin')) {
+    if (!user.user["http://localhost:3000/roles"].includes('Admin')) {
         if (req.nextUrl.pathname.startsWith('/Admin')) {
             const url = req.nextUrl.clone()
             url.pathname = '/'
