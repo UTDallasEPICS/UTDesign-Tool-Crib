@@ -23,9 +23,9 @@ export default withPageAuthRequired(
     const [teamId, setTeamId] = useState(-1);
     const [teamMembers, setTeamMembers] = useState([]);
     const [memberId, setMemberId] = useState(-1);
-    const [teamMember, setTeamMember] = useState("select team member");
+    const [teamMember, setTeamMember] = useState("Select Team Member");
     const [toolId, setToolId] = useState(-1);
-    const [currentTool, setToolName] = useState("select tool");
+    const [currentTool, setToolName] = useState("Select Tool");
     const [currentToolLimit, setToolLimit] = useState(0);
     const [notes, setNotes] = useState("");
     const [dueDate, setDueDate] = useState(new Date());
@@ -114,11 +114,6 @@ export default withPageAuthRequired(
                 {teamMember}
               </button>
               <div id="team-member-dropdown" className="dropdown-content">
-                {/* <input
-              type="text"
-              placeholder="Search..."
-              onKeyUp={filterfunction()}
-            /> */}
                 {teamIsLoading
                   ? "Loading..."
                   : teamMembers.map((entry) => (

@@ -5,7 +5,6 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(request, { params }) {
-  // console.log(params)
   const id = params.id;
   const res = await prisma.log.update({
     where: {
@@ -16,5 +15,15 @@ export async function GET(request, { params }) {
       isReturned: true,
     },
   });
-  return NextResponse.json({ res });
+  const res2 = await prisma.team.update({
+    where: {
+      id: res.teamId,
+    },
+    data: {
+      tokensUsed: {
+        decrement: 1,
+      },
+    },
+  });
+  return NextResponse.json({ res, res2 });
 }
