@@ -54,7 +54,7 @@ export default withPageAuthRequired(
     };
 
     // Add team to list
-    const addUserEvent = (event) => {
+    const addUserEvent = async (event) => {
       if (addUser) {
         const teamMemDetails = document.querySelectorAll(
           "div.team-member-container > input"
@@ -76,7 +76,7 @@ export default withPageAuthRequired(
           tokens: tokenNumber,
         };
 
-        const res = fetch("/api/admin/teams", {
+        const res = await fetch("/api/admin/teams", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ team: teamData }),
@@ -84,6 +84,7 @@ export default withPageAuthRequired(
       }
       // Close addUser window
       setAdd(!addUser);
+      mutate();
     };
 
     // Increment counter to add new students
