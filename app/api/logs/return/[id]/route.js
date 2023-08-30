@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function GET(request, {params}) {
-    console.log(params)
+    // console.log(params)
     const id = params.id
     const res = await prisma.log.update({
         where: {

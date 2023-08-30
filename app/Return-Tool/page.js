@@ -19,9 +19,9 @@ export default withPageAuthRequired( function ReturnTool() {
             document.getElementById(itemList[i].id) &&
             document.getElementById(itemList[i].id).checked
           ) {
-            console.log(itemList[i].id)
+            // console.log(itemList[i].id)
             var apiString = "/api/logs/return/"+String(itemList[i].id)
-            console.log(apiString)
+            // console.log(apiString)
             const res = await fetch(apiString)
             window.location.reload()
           }
@@ -37,7 +37,7 @@ export default withPageAuthRequired( function ReturnTool() {
         if (filteredData.length > 0) {
           // const toolNames = filteredData.map((entry) => {toolName: entry["toolName"], identity: entry.id});
           setItem(filteredData);
-          console.log(filteredData)
+          // console.log(filteredData)
         } else {
           setItem([]);
         }

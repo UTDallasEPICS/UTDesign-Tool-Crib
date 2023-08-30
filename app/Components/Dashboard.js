@@ -16,7 +16,7 @@ export default function Dashboard() {
     }
 
     const loadTime = new Date();
-    console.log(loadTime)
+    // console.log(loadTime)
     return (
       <div className="dashboard">
         {true && (
@@ -62,7 +62,7 @@ export default function Dashboard() {
                   {/* <div className="cell">
                     <p style={{ color: "red" }}>{item["toolLimit"]}</p>
                   </div> */}
-                  {console.log(item)}
+                  {/* {console.log(item)} */}
                 </div>
               ) : (
                 <div className="column-grid" key={item.id}>
@@ -73,7 +73,7 @@ export default function Dashboard() {
                   <div className="cell">{item.tool.name}</div>
                   <div className="cell">{item.notes}</div>
                   {/* <div className="cell">{item["toolLimit"]}</div> */}
-                  {console.log(item)}
+                  {/* {console.log(item)} */}
                 </div>
               )
             )}

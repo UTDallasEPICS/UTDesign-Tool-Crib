@@ -22,7 +22,7 @@ export async function GET() {
 
 export async function PATCH(request) {
     const {team} = await request.json()
-    console.log(team)
+    // console.log(team)
     // const currentTeam = await prisma.team.findUnique({
     //     where: {
     //         id: team.teamId
@@ -73,7 +73,7 @@ export async function PATCH(request) {
 
 export async function POST(request) {
     const {team} = await request.json()
-    console.log(team)
+    // console.log(team)
     const teamRes = await prisma.team.create({
         data: {
             teamNumber: team.teamNumber,
@@ -81,7 +81,7 @@ export async function POST(request) {
             tokens: team.tokens
         }
     })
-    console.log(teamRes)
+    // console.log(teamRes)
     let teamMembers = []
     team.teamMembers.forEach(student => {
         teamMembers.push({
@@ -92,7 +92,7 @@ export async function POST(request) {
     const studentRes = await prisma.student.createMany({
         data: teamMembers
     })
-    console.log(studentRes)
+    // console.log(studentRes)
     // const studentRes = await prisma.student.
     return NextResponse.json({team})
 }

@@ -379,7 +379,7 @@ export default withPageAuthRequired( function ManageTeams() {
               <div className="cell-2">
                 <button
                   onClick={() => {
-                    console.log(item.id)
+                    // console.log(item.id)
                     editUserEvent(item.id);
                   }}
                 >
