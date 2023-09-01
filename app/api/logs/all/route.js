@@ -11,6 +11,7 @@ export async function GET() {
       teamMember: true,
       tool: true,
     },
+    orderBy: { dateCreated: "asc" },
   });
   return NextResponse.json({ data });
 }

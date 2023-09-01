@@ -29,8 +29,10 @@ export default withPageAuthRequired(
     const [currentToolLimit, setToolLimit] = useState(0);
     const [notes, setNotes] = useState("");
     const [dueDate, setDueDate] = useState(new Date());
+    const [teamNumber, setTeamNumber] = useState("");
 
     const refactorTeamData = (num) => {
+      setTeamNumber(num);
       // console.log(teamData.data)
       if (num > 0) {
         // eslint-disable-next-line
@@ -85,7 +87,15 @@ export default withPageAuthRequired(
         body: JSON.stringify({ log: log }),
       });
 
-      window.location.reload();
+      setTeamMember("Select Team Member");
+      setToolName("Select Tool");
+      setNotes("");
+      refactorTeamData("");
+      setTeamMembers([]);
+
+      // document.getElementById("team-number-input").setAttribute("value", "");
+
+      // window.location.reload();
     };
 
     return (
@@ -95,8 +105,10 @@ export default withPageAuthRequired(
           <div className="input-box">
             <label>Team Number</label>
             <input
+              id="team-number-input"
               type="text"
               placeholder="Type here"
+              value={teamNumber}
               onChange={(event) => refactorTeamData(event.target.value)}
             />
             <label>Tool Checkouts Remaining</label>
@@ -175,6 +187,7 @@ export default withPageAuthRequired(
             <input
               type="text"
               placeholder="Type here"
+              value={notes}
               onChange={(event) => setNotes(event.target.value)}
             />
             <label>Due Date</label>

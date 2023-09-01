@@ -15,7 +15,7 @@ export default withPageAuthRequired(
       mutate,
       isLoading,
     } = useSWR("/api/logs/current", fetcher);
-    const [teamNumber, setNumber] = useState(-1);
+    const [teamNumber, setNumber] = useState("");
     const [itemList, setItem] = useState([]);
 
     const handleRemoveEvent = async () => {
@@ -24,11 +24,12 @@ export default withPageAuthRequired(
           document.getElementById(itemList[i].id) &&
           document.getElementById(itemList[i].id).checked
         ) {
-          // console.log(itemList[i].id)
           var apiString = "/api/logs/return/" + String(itemList[i].id);
-          // console.log(apiString)
           const res = await fetch(apiString);
-          window.location.reload();
+          document.getElementById("teamnumber").setAttribute("value", null);
+          setNumber("");
+          setItem([]);
+          mutate();
         }
       }
     };
@@ -57,7 +58,12 @@ export default withPageAuthRequired(
           <div className="input-box">
             <div>
               <p>Team Number</p>
-              <input type="text" id="teamnumber" onChange={handleEnterData} />
+              <input
+                type="text"
+                id="teamnumber"
+                onChange={handleEnterData}
+                value={teamNumber}
+              />
             </div>
             <div>
               {isLoading ? (

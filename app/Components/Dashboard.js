@@ -1,20 +1,65 @@
 "use client";
-import { useState } from "react";
 import "../../src/Styles/logGrid.css";
 import useSWR from "swr";
+import { writeFile, utils } from "xlsx";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Dashboard() {
-  const {
-    data: logData,
-    mutate,
-    error,
-    isLoading,
-  } = useSWR("/api/logs/current", fetcher, { refreshInterval: 300000 }); // Refresh every 5 minutes automatically
+  // Main data displayed in table
+  const { data: logData, isLoading } = useSWR("/api/logs/current", fetcher, {
+    refreshInterval: 300000, // Refresh every 5 minutes automatically
+  });
 
-  const exportLogs = (event) => {
-    const a = "b";
+  const logCleanup = (logIn) => {
+    // Array to store output logs
+    const logOut = [];
+    logIn.map((entry) =>
+      logOut.push({
+        Team: entry["team"]["teamNumber"],
+        Table: entry["team"]["tableNumber"],
+        Tool: entry["tool"]["name"],
+        Student: entry["teamMember"]["name"],
+        "Date Created": new Date(entry["dateCreated"]),
+        "Date Due": new Date(entry["dateDue"]),
+        "Date Returned": entry["isReturned"]
+          ? new Date(entry["dateReturned"])
+          : null,
+        Notes: entry["notes"],
+      })
+    );
+    return logOut;
+  };
+
+  const logToWorksheet = (logIn) => {
+    // Clean up logs to be array of single tier objects
+    const rows = logCleanup(logIn);
+    // Convert rows into better data
+    const worksheet = utils.json_to_sheet(rows, { cellDates: true });
+    // TODO: Fix column widths here
+    return worksheet;
+  };
+
+  const sortByTeam = (logIn) => {
+    logIn.sort((a, b) => a["team"]["teamNumber"] > b["team"]["teamNumber"]);
+    return logIn;
+  };
+
+  const exportLogs = async (event) => {
+    const { data: allData } = await (await fetch("/api/logs/all")).json();
+    const { data: overdueData } = await (
+      await fetch("/api/logs/overdue")
+    ).json();
+    const workbook = utils.book_new();
+    utils.book_append_sheet(
+      workbook,
+      logToWorksheet(sortByTeam(logData.data)),
+      "Out"
+    );
+    overdueData.length &&
+      utils.book_append_sheet(workbook, logToWorksheet(overdueData), "Overdue");
+    utils.book_append_sheet(workbook, logToWorksheet(allData), "All");
+    writeFile(workbook, "ToolcribLog.xlsx");
   };
 
   const loadTime = new Date();

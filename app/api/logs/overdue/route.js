@@ -17,6 +17,11 @@ export async function GET() {
       teamMember: true,
       tool: true,
     },
+    orderBy: {
+      team: {
+        teamNumber: "asc",
+      },
+    },
   });
   return NextResponse.json({ data });
 }
