@@ -26,5 +26,5 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 
 // Only look at api and /Admin routes
 export const config = {
-  matcher: ["/api/:path*", "/Admin/:path*"],
+  matcher: ["/Admin/:path*"],
 };
