@@ -18,7 +18,9 @@ export default function AdminLayout({ children }) {
           <Link href="Manage-Tools">
             <button id="manage-tools-button">Manage Tools</button>
           </Link>
-          <button>Create Users</button>
+          <Link href="Users">
+            <button>Manage Users</button>
+          </Link>
           <Link href="/">
             <button>Dashboard</button>
           </Link>

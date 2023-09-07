@@ -26,7 +26,6 @@ export async function GET() {
   const adminUsersJSON = await adminUsers.json();
   // Get list of admin user IDs
   const adminUserIDs = adminUsersJSON.map((user) => user.user_id);
-  console.log(adminUsersJSON);
   const userRequestURL =
     process.env.AUTH0_ISSUER_BASE_URL +
     "/api/v2/users?" +
@@ -55,17 +54,18 @@ export async function POST(request) {
   const { user } = await request.json();
   const accessToken = await bearerToken();
   const requestUrl = process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/users";
+  console.log(user);
   const requestBody = {
     connection: "Username-Password-Authentication",
-    email: user.email,
+    email: user,
     password: process.env.AUTH0_DEFAULT_PASSWORD, // Users need to reset password for first access
     email_verified: true, // Avoid confirmation email
   };
   const reqOptions = {
-    headers: { Authorization: accessToken },
+    method: "POST",
+    headers: { Authorization: accessToken, "Content-Type": "application/json" },
     body: JSON.stringify(requestBody),
   };
-
   const res = await fetch(requestUrl, reqOptions);
 
   return NextResponse.json({ res });
@@ -73,11 +73,12 @@ export async function POST(request) {
 
 // Delete user
 export async function DELETE(request) {
-  const { user } = await request.json();
+  const { user_id } = await request.json();
   const accessToken = await bearerToken();
   const requestUrl =
-    process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/users/" + user.id;
+    process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/users/" + user_id;
   const reqOptions = {
+    method: "DELETE",
     headers: { Authorization: accessToken },
     next: { revalidate: 0 }, // Always revalidate since this can change at any time
   };
