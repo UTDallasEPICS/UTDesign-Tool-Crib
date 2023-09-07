@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import "../../../src/Styles/ManageTools.css";
+import "./ManageTools.css";
 import useSWR from "swr";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 

@@ -34,7 +34,7 @@ This project uses [auth0](https://auth0.com) for user authentication. You will n
 const user = await getSession(req);
     
 if (!user.user["http://localhost:3000/roles"].includes('Admin')) {
-    if (req.nextUrl.pathname.startsWith('/Admin')) {
+    if (req.nextUrl.pathname.startsWith('/admin')) {
         const url = req.nextUrl.clone()
         url.pathname = '/'
         return NextResponse.redirect(url)

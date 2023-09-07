@@ -1,5 +1,5 @@
-import logo from "../../src/Styles/logo.svg";
-import "../../src/Styles/header.css";
+import logo from "@/public/logo.svg";
+import "@/app/styles/header.css";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,13 +12,15 @@ export default function AdminLayout({ children }) {
           <h1>Admin Panel</h1>
         </div>
         <div className="header-buttons">
-          <Link href="Manage-Teams">
+          <Link href="manage-teams">
             <button id="manage-teams-button">Manage Teams</button>
           </Link>
-          <Link href="Manage-Tools">
+          <Link href="manage-tools">
             <button id="manage-tools-button">Manage Tools</button>
           </Link>
-          <button>Create Users</button>
+          <Link href="users">
+            <button>Manage Users</button>
+          </Link>
           <Link href="/">
             <button>Dashboard</button>
           </Link>

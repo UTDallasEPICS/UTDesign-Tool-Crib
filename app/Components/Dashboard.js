@@ -1,5 +1,5 @@
 "use client";
-import "../../src/Styles/logGrid.css";
+import "./Dashboard.css";
 import useSWR from "swr";
 import { writeFile, utils } from "xlsx";
 

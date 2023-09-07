@@ -10,7 +10,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
   // Check for Admin privileges
   if (!user.user["http://localhost:3000/roles"].includes("Admin")) {
     // Redirect non-admin users to home page when requesting admin  routes
-    if (req.nextUrl.pathname.startsWith("/Admin")) {
+    if (req.nextUrl.pathname.startsWith("/admin")) {
       const url = req.nextUrl.clone();
       url.pathname = "/";
       return NextResponse.redirect(url);
@@ -26,5 +26,5 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 
 // Only look at api and /Admin routes
 export const config = {
-  matcher: ["/api/:path*", "/Admin/:path*"],
+  matcher: ["/admin/:path*", "/api/:path*"],
 };
