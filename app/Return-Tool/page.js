@@ -1,8 +1,8 @@
 "use client";
 import Header from "../Components/Header";
 import useSWR from "swr";
-import "@/src/Styles/header.css";
-import "@/src/Styles/ReturnTool.css";
+import "@/app/styles/header.css";
+import "./ReturnTool.css";
 import { useState } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 

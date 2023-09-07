@@ -1,5 +1,5 @@
 import MainNav from "./MainNav";
-import logo from "../../src/Styles/logo.svg";
+import logo from "@/public/logo.svg";
 import Image from "next/image";
 
 export default function Header({ title }) {

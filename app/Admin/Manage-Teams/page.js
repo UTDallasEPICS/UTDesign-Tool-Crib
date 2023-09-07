@@ -1,6 +1,6 @@
 "use client";
-import "../../../src/Styles/manageTeams.css";
-import "../../../src/Styles/header.css";
+import "./manageTeams.css";
+import "@/app/styles/header.css";
 import { read, utils } from "xlsx";
 import { useState } from "react";
 import useSWR from "swr";

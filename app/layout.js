@@ -1,7 +1,4 @@
 import "./globals.css";
-import Link from "next/link";
-import Image from "next/image";
-import logo from "../src/Styles/logo.svg";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata = {
