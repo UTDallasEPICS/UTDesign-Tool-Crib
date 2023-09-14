@@ -186,7 +186,7 @@ export default withPageAuthRequired(
             <div className="cell">Table Number</div>
             <div className="cell">Team Members</div>
             <div className="cell">Tokens</div>
-            <div className="cell">options</div>
+            <div className="cell">Options</div>
           </div>
           {/* {editUserHtml(currentEditingId)} */}
           {isLoading
