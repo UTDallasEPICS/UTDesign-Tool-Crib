@@ -6,7 +6,7 @@ services:
   db:
     image: mysql
     command: --default-authentication-plugin=caching_sha2_password
-    restart: always
+    restart: unless-stopped
     env_file:
       - .env.local
     ports:
