@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+import { revalidateTag } from "next/cache";
 
 export async function POST(request) {
   const { log } = await request.json();
@@ -26,6 +24,9 @@ export async function POST(request) {
       },
     },
   });
+
+  revalidateTag("logs");
+  revalidateTag("logs_current");
 
   // console.log(res)
   return NextResponse.json({ res });

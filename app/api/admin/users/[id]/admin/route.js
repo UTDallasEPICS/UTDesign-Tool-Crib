@@ -1,8 +1,6 @@
 import { bearerToken } from "../../auth0-user-management-token";
 import { adminID } from "../../adminID";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+import { revalidateTag } from "next/cache";
 
 async function setAdmin(requestType, userID) {
   // Get admin ID and bearer token
@@ -24,6 +22,8 @@ async function setAdmin(requestType, userID) {
   };
 
   const res = await fetch(requestUrl, requestOptions);
+
+  revalidateTag("users");
 
   return res;
 }

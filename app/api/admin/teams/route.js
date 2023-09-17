@@ -1,8 +1,6 @@
 import prisma from "@/app/lib/prisma";
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 export async function GET() {
   const data = await prisma.team.findMany({
@@ -53,6 +51,8 @@ export async function PATCH(request) {
     },
   });
 
+  revalidateTag("teams");
+
   return NextResponse.json({
     newTeam: teamRes,
     membersAdded: newStudentRes,
@@ -79,6 +79,8 @@ export async function POST(request) {
   const studentRes = await prisma.student.createMany({
     data: teamMembers,
   });
+
+  revalidateTag("teams");
   return NextResponse.json({ team });
 }
 
@@ -92,6 +94,8 @@ export async function DELETE(request) {
       isActive: false,
     },
   });
+
+  revalidateTag("teams");
 
   return NextResponse.json({ res });
 }

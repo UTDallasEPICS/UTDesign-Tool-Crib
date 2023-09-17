@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 
 import { bearerToken } from "./auth0-user-management-token";
 import { adminID } from "./adminID";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+import { revalidate } from "../../teams/route";
+import { revalidateTag } from "next/cache";
 
 // Get list of users
 export async function GET() {
@@ -68,6 +67,8 @@ export async function POST(request) {
   };
   const res = await fetch(requestUrl, reqOptions);
 
+  revalidateTag("users");
+
   return NextResponse.json({ res });
 }
 
@@ -84,6 +85,8 @@ export async function DELETE(request) {
   };
 
   const res = await fetch(requestUrl, reqOptions);
+
+  revalidateTag("users");
 
   return NextResponse.json({ res });
 }

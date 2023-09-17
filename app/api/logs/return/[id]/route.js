@@ -1,4 +1,5 @@
 import prisma from "@/app/lib/prisma";
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -25,5 +26,9 @@ export async function GET(request, { params }) {
       },
     },
   });
+
+  revalidateTag("logs");
+  revalidateTag("logs_current");
+
   return NextResponse.json({ res, res2 });
 }
