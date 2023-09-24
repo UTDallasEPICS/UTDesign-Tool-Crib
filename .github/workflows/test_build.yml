@@ -67,7 +67,7 @@ jobs:
           node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Database
-        run: docker compose up -d
+        run: docker compose -f ${{ github.workspace }}/docker-compose.test.yml up -d
       - name: Init Prisma
         run: |
           pnpm prisma generate
