@@ -1,7 +1,7 @@
 "use client";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import "@/app/borrow-tool/BorrowTools.css";
+import "./BorrowTools.css";
 import Header from "../Components/Header";
 import { useState } from "react";
 import useSWR from "swr";
