@@ -58,7 +58,7 @@ jobs:
           node-version: "16"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Database
-          run: docker-compose up -d
+          run: docker compose up -d
       - name: Init Prisma
           run: npm prisma db push
       - name: Restore cache
