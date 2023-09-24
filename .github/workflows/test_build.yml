@@ -43,6 +43,11 @@ jobs:
             echo "::set-output name=command::install"
             echo "::set-output name=runner::yarn"
             exit 0
+          elif [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
+            echo "::set-output name=manager::pnpm"
+            echo "::set-output name=command::install"
+            echo "::set-output name=runner::pnpx --no-install"
+            exit 0
           elif [ -f "${{ github.workspace }}/package.json" ]; then
             echo "::set-output name=manager::npm"
             echo "::set-output name=command::ci"
@@ -55,7 +60,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Database
         run: docker compose up -d
