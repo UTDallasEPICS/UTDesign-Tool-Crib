@@ -66,12 +66,12 @@ jobs:
         with:
           node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-      - name: Setup Database
-        run: docker compose -f ${{ github.workspace }}/docker-compose.test.yml up -d
+      # - name: Setup Database
+      #   run: docker compose -f ${{ github.workspace }}/docker-compose.test.yml up -d
       - name: Init Prisma
-        run: |
-          pnpm prisma generate
-          pnpm prisma db push
+        run:
+          prisma generate
+          # prisma db push
       - name: Restore cache
         uses: actions/cache@v3
         with:
