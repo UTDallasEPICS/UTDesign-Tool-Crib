@@ -57,6 +57,10 @@ jobs:
             echo "Unable to determine packager manager"
             exit 1
           fi
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+          with:
+            version: latest
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -65,7 +69,9 @@ jobs:
       - name: Setup Database
         run: docker compose up -d
       - name: Init Prisma
-        run: npm prisma db push
+        run: |
+          pnpm prisma generate
+          pnpm prisma db push
       - name: Restore cache
         uses: actions/cache@v3
         with:
