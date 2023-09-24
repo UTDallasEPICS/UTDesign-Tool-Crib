@@ -6,13 +6,13 @@ export default function MainNav() {
       <Link href="/">
         <button>Dashboard</button>
       </Link>
-      <Link href="/borrow-tool">
+      <Link href="/Borrow-Tool">
         <button>Borrow Tool</button>
       </Link>
-      <Link href="/return-tool">
+      <Link href="/Return-Tool">
         <button>Return Tool</button>
       </Link>
-      <Link href="/admin/manage-teams">
+      <Link href="/Admin/Manage-Teams">
         <button>Admin Panel</button>
       </Link>
       <a href="/api/auth/logout">

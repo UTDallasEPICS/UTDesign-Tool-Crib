@@ -12,13 +12,13 @@ export default function AdminLayout({ children }) {
           <h1>Admin Panel</h1>
         </div>
         <div className="header-buttons">
-          <Link href="manage-teams">
+          <Link href="Manage-Teams">
             <button id="manage-teams-button">Manage Teams</button>
           </Link>
-          <Link href="manage-tools">
+          <Link href="Manage-Tools">
             <button id="manage-tools-button">Manage Tools</button>
           </Link>
-          <Link href="users">
+          <Link href="Users">
             <button>Manage Users</button>
           </Link>
           <Link href="/">
