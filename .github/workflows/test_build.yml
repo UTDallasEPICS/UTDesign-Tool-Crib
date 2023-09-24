@@ -66,8 +66,6 @@ jobs:
         with:
           node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-      # - name: Setup Database
-      #   run: docker compose -f ${{ github.workspace }}/docker-compose.test.yml up -d
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -81,6 +79,6 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Init Prisma
-        run: prisma generate
+        run: ${{ steps.detect-package-manager.outputs.runner }} prisma generate
       - name: Build with Next.js
-        run: npm run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build
