@@ -69,7 +69,7 @@ jobs:
       # - name: Setup Database
       #   run: docker compose -f ${{ github.workspace }}/docker-compose.test.yml up -d
       - name: Init Prisma
-        run: prisma generate
+        run: pnpx prisma generate
       - name: Restore cache
         uses: actions/cache@v3
         with:
