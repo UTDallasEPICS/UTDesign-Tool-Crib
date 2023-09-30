@@ -23,7 +23,7 @@
     "react": "18.2.0",
     "react-date-picker": "^10.5.0",
     "react-dom": "18.2.0",
-    "swr": "^2.2.2",
+    "swr": "^2.2.3",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
