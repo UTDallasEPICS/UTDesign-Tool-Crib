@@ -27,8 +27,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0
   react-date-picker:
-    specifier: ^10.5.0
-    version: 10.5.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^10.5.1
+    version: 10.5.1(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
@@ -1963,8 +1963,8 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
-  /react-date-picker@10.5.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-A0LsM7M9iaOj+ALFOum5xdKlE6GdmKQKrctKJiOrU9lAeX+adkBqjHMZItYiO2OmWoHhRQm8iGVJCMA2SV8+IA==}
+  /react-date-picker@10.5.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Ipsq0NorPqXRuZQsqWhdd86RlSbZbnhpiH0aEMzJo6Rs2YA7eALZKB5lrl9stSjpDriDJH0dyh2kdWQmkBhNFg==}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
