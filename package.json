@@ -21,7 +21,7 @@
     "eslint-config-next": "~13.5.4",
     "next": "~13.5.4",
     "react": "18.2.0",
-    "react-date-picker": "^10.5.1",
+    "react-date-picker": "^10.5.2",
     "react-dom": "18.2.0",
     "swr": "^2.2.4",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
