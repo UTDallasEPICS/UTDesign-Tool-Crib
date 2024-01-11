@@ -33,8 +33,7 @@ export default withPageAuthRequired(
 
     const refactorTeamData = (num) => {
       setTeamNumber(num);
-      // console.log(teamData.data)
-      if (num > 0) {
+      if (num.length > 0) {
         // eslint-disable-next-line
         const currentTeams = teamData.data.filter(
           (item) => item.teamNumber == num
