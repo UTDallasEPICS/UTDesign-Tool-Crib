@@ -38,7 +38,9 @@ export default withPageAuthRequired(
       setNumber(event.target.value);
       const filteredData = toolLogs.data.filter(
         // eslint-disable-next-line
-        (entry) => entry.team.teamNumber == event.target.value
+        (entry) =>
+          entry.team.teamNumber.toUpperCase() ==
+          event.target.value.toUpperCase()
       );
       if (filteredData.length > 0) {
         // const toolNames = filteredData.map((entry) => {toolName: entry["toolName"], identity: entry.id});
