@@ -1,15 +1,57 @@
 "use client";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
 import "./Dashboard.css";
 import useSWR from "swr";
 import { writeFile, utils } from "xlsx";
+// import UpdateCheckout from "@/Components/UpdateCheckout";
+import { useState } from "react";
+import DatePicker from "react-date-picker";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Dashboard() {
   // Main data displayed in table
-  const { data: logData, isLoading } = useSWR("/api/logs/current", fetcher, {
+  const {
+    data: logData,
+    mutate,
+    isLoading,
+  } = useSWR("/api/logs/current", fetcher, {
     refreshInterval: 300000, // Refresh every 5 minutes automatically
   });
+
+  const [currentEditId, setCurrentEditId] = useState(0);
+  const [currentDueDate, setCurrentDueDate] = useState(new Date());
+
+  const handleDateUpdate = async (logId, theDueDate) => {
+    const reqData = {
+      dueDate: theDueDate.toISOString(),
+    };
+    // console.log(e.target.valueAsDate);
+    const apiString = "/api/logs/update/" + String(logId);
+    const res = await fetch(apiString, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ update: reqData }),
+    });
+    console.log(await res.json());
+    mutate();
+  };
+
+  const editCheckoutEvent = (id, dueDate) => {
+    // console.log(id);
+    if (currentEditId != 0 && id == currentEditId) {
+      // const basicDueDate = new Date(currentDueDate);
+      const theDueDate = new Date(currentDueDate.setHours(23, 59));
+      // console.log(theDueDate);
+      handleDateUpdate(id, theDueDate);
+      setCurrentEditId(0);
+    } else {
+      // console.log(dueDate);
+      setCurrentDueDate(new Date(dueDate));
+      setCurrentEditId(id);
+    }
+  };
 
   const logCleanup = (logIn) => {
     // Array to store output logs
@@ -82,6 +124,7 @@ export default function Dashboard() {
             <div className="header-cell">Due Date</div>
             <div className="header-cell">Tool Name</div>
             <div className="header-cell">Notes</div>
+            <div className="header-cell">Options</div>
             {/* <div className="header-cell">Tool Limit</div> */}
           </div>
 
@@ -100,15 +143,31 @@ export default function Dashboard() {
                       <p style={{ color: "red" }}>{item.teamMember.name}</p>
                     </div>
                     <div className="cell">
-                      <p style={{ color: "red" }}>
-                        {new Date(item.dateDue).toLocaleDateString()}
-                      </p>
+                      {item.id === currentEditId ? (
+                        <DatePicker
+                          clearIcon={null}
+                          onChange={setCurrentDueDate}
+                          value={currentDueDate}
+                        />
+                      ) : (
+                        new Date(item.dateDue).toLocaleDateString()
+                      )}
                     </div>
                     <div className="cell">
                       <p style={{ color: "red" }}>{item.tool.name}</p>
                     </div>
                     <div className="cell">
                       <p style={{ color: "red" }}>{item.notes}</p>
+                    </div>
+                    <div className="cell">
+                      <button
+                        onClick={() => {
+                          // console.log(item);
+                          editCheckoutEvent(item.id, item.dateDue);
+                        }}
+                      >
+                        {item.id === currentEditId ? "Submit" : "Edit"}
+                      </button>
                     </div>
                     {/* <div className="cell">
                     <p style={{ color: "red" }}>{item["toolLimit"]}</p>
@@ -121,10 +180,38 @@ export default function Dashboard() {
                     <div className="cell">{item.team.tableNumber}</div>
                     <div className="cell">{item.teamMember.name}</div>
                     <div className="cell">
-                      {new Date(item.dateDue).toLocaleDateString()}
+                      {item.id === currentEditId ? (
+                        <DatePicker
+                          clearIcon={null}
+                          onChange={setCurrentDueDate}
+                          value={currentDueDate}
+                        />
+                      ) : (
+                        new Date(item.dateDue).toLocaleDateString()
+                      )}
                     </div>
                     <div className="cell">{item.tool.name}</div>
                     <div className="cell">{item.notes}</div>
+                    <div className="cell">
+                      {/* {item.id === currentEditId ? ( */}
+                      <button
+                        onClick={() => {
+                          editCheckoutEvent(item.id, item.dateDue);
+                          // console.log(currentDueDate);
+                        }}
+                      >
+                        {item.id === currentEditId ? "Submit" : "Edit"}
+                      </button>
+                      {/* ) : (
+                        <button
+                          onClick={() => {
+                            submitUpdate(item.id);
+                          }}
+                        >
+                          Submit
+                        </button> */}
+                      {/* )} */}
+                    </div>
                     {/* <div className="cell">{item["toolLimit"]}</div> */}
                     {/* {console.log(item)} */}
                   </div>
