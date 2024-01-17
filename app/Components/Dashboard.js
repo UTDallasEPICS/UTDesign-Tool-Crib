@@ -150,7 +150,9 @@ export default function Dashboard() {
                           value={currentDueDate}
                         />
                       ) : (
-                        new Date(item.dateDue).toLocaleDateString()
+                        <p style={{ color: "red" }}>
+                          {new Date(item.dateDue).toLocaleDateString()}
+                        </p>
                       )}
                     </div>
                     <div className="cell">
@@ -160,14 +162,16 @@ export default function Dashboard() {
                       <p style={{ color: "red" }}>{item.notes}</p>
                     </div>
                     <div className="cell">
-                      <button
-                        onClick={() => {
-                          // console.log(item);
-                          editCheckoutEvent(item.id, item.dateDue);
-                        }}
-                      >
-                        {item.id === currentEditId ? "Submit" : "Edit"}
-                      </button>
+                      <p>
+                        <button
+                          onClick={() => {
+                            // console.log(item);
+                            editCheckoutEvent(item.id, item.dateDue);
+                          }}
+                        >
+                          {item.id === currentEditId ? "Submit" : "Edit"}
+                        </button>
+                      </p>
                     </div>
                     {/* <div className="cell">
                     <p style={{ color: "red" }}>{item["toolLimit"]}</p>
@@ -176,9 +180,15 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="column-grid" key={item.id}>
-                    <div className="cell">{item.team.teamNumber}</div>
-                    <div className="cell">{item.team.tableNumber}</div>
-                    <div className="cell">{item.teamMember.name}</div>
+                    <div className="cell">
+                      <p>{item.team.teamNumber}</p>
+                    </div>
+                    <div className="cell">
+                      <p>{item.team.tableNumber}</p>
+                    </div>
+                    <div className="cell">
+                      <p>{item.teamMember.name}</p>
+                    </div>
                     <div className="cell">
                       {item.id === currentEditId ? (
                         <DatePicker
@@ -187,21 +197,27 @@ export default function Dashboard() {
                           value={currentDueDate}
                         />
                       ) : (
-                        new Date(item.dateDue).toLocaleDateString()
+                        <p>{new Date(item.dateDue).toLocaleDateString()}</p>
                       )}
                     </div>
-                    <div className="cell">{item.tool.name}</div>
-                    <div className="cell">{item.notes}</div>
+                    <div className="cell">
+                      <p>{item.tool.name}</p>
+                    </div>
+                    <div className="cell">
+                      <p>{item.notes}</p>
+                    </div>
                     <div className="cell">
                       {/* {item.id === currentEditId ? ( */}
-                      <button
-                        onClick={() => {
-                          editCheckoutEvent(item.id, item.dateDue);
-                          // console.log(currentDueDate);
-                        }}
-                      >
-                        {item.id === currentEditId ? "Submit" : "Edit"}
-                      </button>
+                      <p>
+                        <button
+                          onClick={() => {
+                            editCheckoutEvent(item.id, item.dateDue);
+                            // console.log(currentDueDate);
+                          }}
+                        >
+                          {item.id === currentEditId ? "Submit" : "Edit"}
+                        </button>
+                      </p>
                       {/* ) : (
                         <button
                           onClick={() => {
