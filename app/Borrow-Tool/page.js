@@ -1,7 +1,7 @@
 "use client";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import "@/app/borrow-tool/BorrowTools.css";
+import "./BorrowTools.css";
 import Header from "../Components/Header";
 import { useState } from "react";
 import useSWR from "swr";
@@ -30,23 +30,26 @@ export default withPageAuthRequired(
     const [notes, setNotes] = useState("");
     const [dueDate, setDueDate] = useState(new Date());
     const [teamNumber, setTeamNumber] = useState("");
+    const [teamNumberIsValid, setValidTeam] = useState(false);
 
     const refactorTeamData = (num) => {
       setTeamNumber(num);
-      // console.log(teamData.data)
-      if (num > 0) {
+      if (num.length > 0) {
         // eslint-disable-next-line
         const currentTeams = teamData.data.filter(
-          (item) => item.teamNumber == num
+          (item) => item.teamNumber.toUpperCase() == num.toUpperCase()
         );
         if (currentTeams.length > 0) {
+          setValidTeam(true);
           setTeamMembers(currentTeams[0].teamMembers);
           setToolLimit(currentTeams[0].tokens - currentTeams[0].tokensUsed);
-          setTeamMember("select team member");
+          setTeamMember("Select Team Member");
           setMemberId(-1);
           setTeamId(currentTeams[0].id);
         } else {
-          setTeamMember("select team member");
+          setValidTeam(false);
+          setToolLimit(0);
+          setTeamMember("Select Team Member");
           setTeamMembers([]);
         }
       }
@@ -108,6 +111,7 @@ export default withPageAuthRequired(
               id="team-number-input"
               type="text"
               placeholder="Type here"
+              className={teamNumberIsValid ? null : "invalid"}
               value={teamNumber}
               onChange={(event) => refactorTeamData(event.target.value)}
             />
