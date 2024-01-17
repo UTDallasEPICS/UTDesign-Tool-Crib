@@ -91,3 +91,7 @@
   margin-bottom: 25px;
   border-radius: 25px;
 }
+
+.invalid {
+  background-color: rgba(255, 0, 0, 0.15);
+}

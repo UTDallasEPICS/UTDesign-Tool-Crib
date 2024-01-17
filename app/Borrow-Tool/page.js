@@ -30,6 +30,7 @@ export default withPageAuthRequired(
     const [notes, setNotes] = useState("");
     const [dueDate, setDueDate] = useState(new Date());
     const [teamNumber, setTeamNumber] = useState("");
+    const [teamNumberIsValid, setValidTeam] = useState(false);
 
     const refactorTeamData = (num) => {
       setTeamNumber(num);
@@ -39,12 +40,15 @@ export default withPageAuthRequired(
           (item) => item.teamNumber.toUpperCase() == num.toUpperCase()
         );
         if (currentTeams.length > 0) {
+          setValidTeam(true);
           setTeamMembers(currentTeams[0].teamMembers);
           setToolLimit(currentTeams[0].tokens - currentTeams[0].tokensUsed);
           setTeamMember("Select Team Member");
           setMemberId(-1);
           setTeamId(currentTeams[0].id);
         } else {
+          setValidTeam(false);
+          setToolLimit(0);
           setTeamMember("Select Team Member");
           setTeamMembers([]);
         }
@@ -107,6 +111,7 @@ export default withPageAuthRequired(
               id="team-number-input"
               type="text"
               placeholder="Type here"
+              className={teamNumberIsValid ? null : "invalid"}
               value={teamNumber}
               onChange={(event) => refactorTeamData(event.target.value)}
             />
