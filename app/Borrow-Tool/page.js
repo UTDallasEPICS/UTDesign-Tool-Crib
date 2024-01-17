@@ -36,16 +36,16 @@ export default withPageAuthRequired(
       if (num.length > 0) {
         // eslint-disable-next-line
         const currentTeams = teamData.data.filter(
-          (item) => item.teamNumber == num
+          (item) => item.teamNumber.toUpperCase() == num.toUpperCase()
         );
         if (currentTeams.length > 0) {
           setTeamMembers(currentTeams[0].teamMembers);
           setToolLimit(currentTeams[0].tokens - currentTeams[0].tokensUsed);
-          setTeamMember("select team member");
+          setTeamMember("Select Team Member");
           setMemberId(-1);
           setTeamId(currentTeams[0].id);
         } else {
-          setTeamMember("select team member");
+          setTeamMember("Select Team Member");
           setTeamMembers([]);
         }
       }
