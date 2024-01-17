@@ -1,6 +1,7 @@
 #!/bin/bash
+cd /home/user/project/location
 git pull
 pnpm i
 pnpm build
-systemd stop toolcrib
-systemd start toolcrib
+systemctl stop toolcrib
+systemctl start toolcrib
