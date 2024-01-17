@@ -108,133 +108,85 @@ export default function Dashboard() {
   // console.log(loadTime)
   return (
     <div className="dashboard">
-      {true && (
-        <div>
-          <button className="export" onClick={exportLogs}>
-            Export Log History
-          </button>
+      <div>
+        <button className="export" onClick={exportLogs}>
+          Export Log History
+        </button>
+      </div>
+      <div className="grid">
+        <div className="column-grid-header">
+          <div className="header-cell">Team Number</div>
+          <div className="header-cell">Table Number</div>
+          <div className="header-cell">Team Member</div>
+          <div className="header-cell">Due Date</div>
+          <div className="header-cell">Tool Name</div>
+          <div className="header-cell">Notes</div>
+          <div className="header-cell">Options</div>
+          {/* <div className="header-cell">Tool Limit</div> */}
         </div>
-      )}
-      {true && (
-        <div className="grid">
-          <div className="column-grid-header">
-            <div className="header-cell">Team Number</div>
-            <div className="header-cell">Table Number</div>
-            <div className="header-cell">Team Member</div>
-            <div className="header-cell">Due Date</div>
-            <div className="header-cell">Tool Name</div>
-            <div className="header-cell">Notes</div>
-            <div className="header-cell">Options</div>
-            {/* <div className="header-cell">Tool Limit</div> */}
-          </div>
 
-          {isLoading
-            ? "Loading..."
-            : logData.data.map((item) =>
-                new Date(item.dateDue) < loadTime ? (
-                  <div id="late" className="column-grid" key={item.id}>
-                    <div className="cell">
-                      <p style={{ color: "red" }}>{item.team.teamNumber}</p>
-                    </div>
-                    <div className="cell">
-                      <p style={{ color: "red" }}>{item.team.tableNumber}</p>
-                    </div>
-                    <div className="cell">
-                      <p style={{ color: "red" }}>{item.teamMember.name}</p>
-                    </div>
-                    <div className="cell">
-                      {item.id === currentEditId ? (
-                        <DatePicker
-                          clearIcon={null}
-                          onChange={setCurrentDueDate}
-                          value={currentDueDate}
-                        />
-                      ) : (
-                        <p style={{ color: "red" }}>
-                          {new Date(item.dateDue).toLocaleDateString()}
-                        </p>
-                      )}
-                    </div>
-                    <div className="cell">
-                      <p style={{ color: "red" }}>{item.tool.name}</p>
-                    </div>
-                    <div className="cell">
-                      <p style={{ color: "red" }}>{item.notes}</p>
-                    </div>
-                    <div className="cell">
-                      <p>
-                        <button
-                          onClick={() => {
-                            // console.log(item);
-                            editCheckoutEvent(item.id, item.dateDue);
-                          }}
-                        >
-                          {item.id === currentEditId ? "Submit" : "Edit"}
-                        </button>
-                      </p>
-                    </div>
-                    {/* <div className="cell">
-                    <p style={{ color: "red" }}>{item["toolLimit"]}</p>
-                  </div> */}
-                    {/* {console.log(item)} */}
-                  </div>
-                ) : (
-                  <div className="column-grid" key={item.id}>
-                    <div className="cell">
-                      <p>{item.team.teamNumber}</p>
-                    </div>
-                    <div className="cell">
-                      <p>{item.team.tableNumber}</p>
-                    </div>
-                    <div className="cell">
-                      <p>{item.teamMember.name}</p>
-                    </div>
-                    <div className="cell">
-                      {item.id === currentEditId ? (
-                        <DatePicker
-                          clearIcon={null}
-                          onChange={setCurrentDueDate}
-                          value={currentDueDate}
-                        />
-                      ) : (
-                        <p>{new Date(item.dateDue).toLocaleDateString()}</p>
-                      )}
-                    </div>
-                    <div className="cell">
-                      <p>{item.tool.name}</p>
-                    </div>
-                    <div className="cell">
-                      <p>{item.notes}</p>
-                    </div>
-                    <div className="cell">
-                      {/* {item.id === currentEditId ? ( */}
-                      <p>
-                        <button
-                          onClick={() => {
-                            editCheckoutEvent(item.id, item.dateDue);
-                            // console.log(currentDueDate);
-                          }}
-                        >
-                          {item.id === currentEditId ? "Submit" : "Edit"}
-                        </button>
-                      </p>
-                      {/* ) : (
-                        <button
-                          onClick={() => {
-                            submitUpdate(item.id);
-                          }}
-                        >
-                          Submit
-                        </button> */}
-                      {/* )} */}
-                    </div>
-                    {/* <div className="cell">{item["toolLimit"]}</div> */}
-                    {/* {console.log(item)} */}
-                  </div>
-                )
-              )}
-        </div>
-      )}
+        {isLoading
+          ? "Loading..."
+          : logData.data.map((item) => (
+              <div
+                className={
+                  new Date(item.dateDue) < loadTime
+                    ? "column-grid late"
+                    : "column-grid"
+                }
+                key={item.id}
+              >
+                <div className="cell">
+                  <p>{item.team.teamNumber}</p>
+                </div>
+                <div className="cell">
+                  <p>{item.team.tableNumber}</p>
+                </div>
+                <div className="cell">
+                  <p>{item.teamMember.name}</p>
+                </div>
+                <div className="cell">
+                  {item.id === currentEditId ? (
+                    <DatePicker
+                      clearIcon={null}
+                      onChange={setCurrentDueDate}
+                      value={currentDueDate}
+                    />
+                  ) : (
+                    <p>{new Date(item.dateDue).toLocaleDateString()}</p>
+                  )}
+                </div>
+                <div className="cell">
+                  <p>{item.tool.name}</p>
+                </div>
+                <div className="cell">
+                  <p>{item.notes}</p>
+                </div>
+                <div className="cell">
+                  <p>
+                    <button
+                      onClick={() => {
+                        // console.log(item);
+                        editCheckoutEvent(item.id, item.dateDue);
+                      }}
+                    >
+                      {item.id === currentEditId ? "Submit" : "Edit"}
+                    </button>
+                    {item.id === currentEditId ? (
+                      <button
+                        style={{ marginTop: "1em" }}
+                        onClick={() => setCurrentEditId(0)}
+                      >
+                        Cancel
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </p>
+                </div>
+              </div>
+            ))}
+      </div>
     </div>
   );
 }

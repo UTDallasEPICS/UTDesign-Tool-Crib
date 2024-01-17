@@ -7,7 +7,7 @@ export const revalidate = 0;
 export async function POST(request, { params }) {
   const id = params.id;
   const { update } = await request.json();
-  console.log(update);
+  //   console.log(update);
   const res = await prisma.log.update({
     where: {
       id: parseInt(id),
