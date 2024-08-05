@@ -15,19 +15,19 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
-    "@prisma/client": "^5.8.1",
-    "dotenv-cli": "^7.3.0",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "~14.1.0",
-    "next": "~14.1.0",
+    "@prisma/client": "^5.17.0",
+    "dotenv-cli": "^7.4.2",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "~14.1.4",
+    "next": "~14.1.4",
     "react": "18.2.0",
     "react-date-picker": "^10.6.0",
     "react-dom": "18.2.0",
-    "swr": "^2.2.4",
+    "swr": "^2.2.5",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
-    "prisma": "^5.8.1"
+    "prisma": "^5.17.0"
   },
   "overrides": {
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
