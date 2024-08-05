@@ -19,17 +19,33 @@ export default withPageAuthRequired(
     const [itemList, setItem] = useState([]);
 
     const handleRemoveEvent = async () => {
+      let itemsToRemove = [];
       for (let i = 0; i < itemList.length; i++) {
         if (
           document.getElementById(itemList[i].id) &&
           document.getElementById(itemList[i].id).checked
         ) {
-          var apiString = "/api/logs/return/" + String(itemList[i].id);
-          const res = await fetch(apiString);
+          itemsToRemove.push(itemList[i].id);
+        }
+      }
+
+      if (itemsToRemove.length) {
+        const res = await fetch(`/api/logs/return/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            teamId: itemList[0].team.id,
+            logIds: "itemsToRemove",
+          }),
+        });
+        if (res.status === 200) {
           document.getElementById("teamnumber").setAttribute("value", null);
           setNumber("");
           setItem([]);
           mutate();
+        } else {
+          console.log(await res.json());
+          alert("Failed to return items. Please try again.");
         }
       }
     };

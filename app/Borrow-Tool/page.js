@@ -12,10 +12,11 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default withPageAuthRequired(
   function BorrowTool() {
-    const { data: teamData, isLoading: teamIsLoading } = useSWR(
-      "/api/teams",
-      fetcher
-    );
+    const {
+      data: teamData,
+      isLoading: teamIsLoading,
+      mutate,
+    } = useSWR("/api/teams", fetcher);
     const { data: toolData, isLoading: toolIsLoading } = useSWR(
       "/api/tools",
       fetcher
@@ -95,7 +96,8 @@ export default withPageAuthRequired(
       setNotes("");
       refactorTeamData("");
       setTeamMembers([]);
-
+      setToolLimit(0);
+      mutate();
       // document.getElementById("team-number-input").setAttribute("value", "");
 
       // window.location.reload();
