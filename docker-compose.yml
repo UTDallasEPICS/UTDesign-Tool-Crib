@@ -1,6 +1,4 @@
 # Set username, password, and host in .env.local
-version: '3.1'
-
 services:
 
   db:
@@ -14,9 +12,3 @@ services:
     volumes:
       - ./db_files:/var/lib/mysql
       - ./db_init:/docker-entrypoint-initdb.d
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
