@@ -6,46 +6,38 @@ export const revalidate = 0;
 
 export async function POST(request) {
   const { teamId, logIds } = await request.json();
-  var res;
-  var res2;
+  var res1, res2, theResponse;
   try {
-    res = await prisma.log.updateMany({
-      where: {
-        id: {
-          in: logIds,
+    [res1, res2] = await prisma.$transaction([
+      prisma.log.updateMany({
+        where: {
+          id: {
+            in: logIds,
+          },
         },
-      },
-      data: {
-        dateReturned: new Date(),
-        isReturned: true,
-      },
-    });
+        data: {
+          dateReturned: new Date(),
+          isReturned: true,
+        },
+      }),
+      prisma.team.update({
+        where: {
+          id: teamId,
+        },
+        data: {
+          tokensUsed: {
+            decrement: logIds.length,
+          },
+        },
+      }),
+    ]);
+    theResponse = NextResponse.json({ res1, res2 });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to update logs", details: error.message },
-      { status: 500 }
-    );
-  }
-  console.log(res);
-  const tokensToReturn = res.count;
-  if (tokensToReturn > 0) {
-    res2 = await prisma.team.update({
-      where: {
-        id: teamId,
-      },
-      data: {
-        tokensUsed: {
-          decrement: tokensToReturn,
-        },
-      },
-    });
-    res2 = NextResponse.json({ res2 });
-  } else {
-    res2 = NextResponse.json(
-      { error: "Cannot find matching records" },
+    theResponse = NextResponse.json(
+      { error: "Failed to process transaction", details: error.message },
       { status: 500 }
     );
   }
 
-  return res2;
+  return NextResponse.json(theResponse);
 }

@@ -35,7 +35,7 @@ export default withPageAuthRequired(
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             teamId: itemList[0].team.id,
-            logIds: "itemsToRemove",
+            logIds: itemsToRemove,
           }),
         });
         if (res.status === 200) {
