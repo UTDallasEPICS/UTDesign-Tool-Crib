@@ -27,6 +27,6 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
-    "prisma": "^5.17.0"
+    "prisma": "^5.18.0"
   }
 }
