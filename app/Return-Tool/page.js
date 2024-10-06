@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 import useSWR from "swr";
 import "@/app/styles/header.css";
 import "./ReturnTool.css";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -15,8 +15,21 @@ export default withPageAuthRequired(
       mutate,
       isLoading,
     } = useSWR("/api/logs/current", fetcher);
-    const [teamNumber, setNumber] = useState("");
+    const [teamNumber, setNumber] = useState("Select Team...");
     const [itemList, setItem] = useState([]);
+    const [teamList, setTeamList] = useState([]);
+    const textInput = useRef();
+
+    const effectCalledRef = useRef(false);
+    useEffect(() => {
+      if (!isLoading && !effectCalledRef.current) {
+        const tempTeams = [
+          ...new Set(toolLogs.data.map((item) => item.team.teamNumber)),
+        ];
+        console.log(tempTeams);
+        setTeamList(tempTeams.sort());
+      }
+    }, [toolLogs, isLoading]);
 
     const handleRemoveEvent = async () => {
       let itemsToRemove = [];
@@ -51,12 +64,11 @@ export default withPageAuthRequired(
     };
 
     const handleEnterData = (event) => {
-      setNumber(event.target.value);
+      // console.log(event);
+      setNumber(event);
       const filteredData = toolLogs.data.filter(
         // eslint-disable-next-line
-        (entry) =>
-          entry.team.teamNumber.toUpperCase() ==
-          event.target.value.toUpperCase()
+        (entry) => entry.team.teamNumber.toUpperCase() == event.toUpperCase()
       );
       if (filteredData.length > 0) {
         // const toolNames = filteredData.map((entry) => {toolName: entry["toolName"], identity: entry.id});
@@ -68,20 +80,74 @@ export default withPageAuthRequired(
       // delete orderData[0];
     };
 
+    const filterTools = () => {
+      let input, filter, div, txtValue, a, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      div = document.getElementById("tool-dropdown");
+      a = div.getElementsByTagName("button");
+      for (i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          a[i].style.display = "";
+        } else {
+          a[i].style.display = "none";
+        }
+      }
+    };
+
     return (
       <div className="return-tool">
         <Header title="Return Tool" />
 
         <center>
           <div className="input-box">
-            <div>
-              <p>Team Number</p>
+            <div className="dropdown">
+              {/* <p>Team Number</p>
               <input
                 type="text"
                 id="teamnumber"
                 onChange={handleEnterData}
                 value={teamNumber}
-              />
+              /> */}
+
+              <button
+                onClick={() => {
+                  document
+                    .getElementById("tool-dropdown")
+                    .classList.toggle("show");
+                  textInput.current.focus();
+                }}
+                className="drop-btn"
+              >
+                {teamNumber}
+              </button>
+              <div id="tool-dropdown" className="dropdown-content">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  onKeyUp={() => filterTools()}
+                  id="myInput"
+                  ref={textInput}
+                />
+                {isLoading
+                  ? "Loading..."
+                  : teamList.map((entry) => (
+                      <div key={entry}>
+                        <button
+                          onClick={() => {
+                            console.log(teamNumber);
+                            document
+                              .getElementById("tool-dropdown")
+                              .classList.toggle("show");
+                            handleEnterData(entry);
+                          }}
+                        >
+                          {entry}
+                        </button>
+                      </div>
+                    ))}
+              </div>
             </div>
             <div>
               {isLoading ? (
