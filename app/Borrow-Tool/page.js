@@ -208,6 +208,7 @@ export default withPageAuthRequired(
               clearIcon={null}
               onChange={setDueDate}
               value={dueDate}
+              locale="en-US"
             />
             {/* <Link href="/"> */}
             <button
