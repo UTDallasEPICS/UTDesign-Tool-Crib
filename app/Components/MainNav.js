@@ -15,9 +15,9 @@ export default function MainNav() {
       <Link href="/Admin/Manage-Teams">
         <button>Admin Panel</button>
       </Link>
-      <a href="/api/auth/logout">
+      <Link href="/api/auth/logout">
         <button>Logout</button>
-      </a>
+      </Link>
     </div>
   );
 }
