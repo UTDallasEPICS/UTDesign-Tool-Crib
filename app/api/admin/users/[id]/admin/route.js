@@ -28,12 +28,14 @@ async function setAdmin(requestType, userID) {
   return res;
 }
 
-export async function GET(request, { params }) {
+export async function GET(request, props) {
+  const params = await props.params;
   const userID = params.id;
   return await setAdmin("POST", userID);
 }
 
-export async function DELETE(request, { params }) {
+export async function DELETE(request, props) {
+  const params = await props.params;
   const userID = params.id;
   return await setAdmin("DELETE", userID);
 }
