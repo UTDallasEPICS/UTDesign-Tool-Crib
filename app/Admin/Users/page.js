@@ -10,9 +10,6 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Users() {
   const { user, isLoading: userIsLoading, error } = useUser();
-
-  if (userIsLoading) return <div>Loading...</div>;
-  if (!user) return <div>Not authenticated!</div>;
   // Get tool list from backend
   const {
     data: userData,
