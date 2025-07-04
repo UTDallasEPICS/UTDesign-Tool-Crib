@@ -4,7 +4,7 @@ export async function bearerToken() {
     grant_type: "client_credentials",
     client_id: process.env.AUTH0_CLIENT_ID,
     client_secret: process.env.AUTH0_CLIENT_SECRET,
-    audience: process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/",
+    audience: "https://" + process.env.AUTH0_DOMAIN + "/api/v2/",
   };
 
   // Post request with JSON body and refresh of 1 day
@@ -17,7 +17,7 @@ export async function bearerToken() {
 
   // Fetch API token
   const tokenResponse = await fetch(
-    process.env.AUTH0_ISSUER_BASE_URL + "/oauth/token",
+    "https://" + process.env.AUTH0_DOMAIN + "/oauth/token",
     requestOptions
   );
 
