@@ -11,7 +11,8 @@ export async function GET() {
   const adminID_string = await adminID();
   const accessToken = await bearerToken();
   const roleRequestURL =
-    process.env.AUTH0_ISSUER_BASE_URL +
+    "https://" +
+    process.env.AUTH0_DOMAIN +
     "/api/v2/roles/" +
     adminID_string +
     "/users";
@@ -27,7 +28,8 @@ export async function GET() {
   // Get list of admin user IDs
   const adminUserIDs = adminUsersJSON.map((user) => user.user_id);
   const userRequestURL =
-    process.env.AUTH0_ISSUER_BASE_URL +
+    "https://" +
+    process.env.AUTH0_DOMAIN +
     "/api/v2/users?" +
     new URLSearchParams({
       sort: "email:1",
@@ -53,7 +55,7 @@ export async function GET() {
 export async function POST(request) {
   const { user } = await request.json();
   const accessToken = await bearerToken();
-  const requestUrl = process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/users";
+  const requestUrl = "https://" + process.env.AUTH0_DOMAIN + "/api/v2/users";
   console.log(user);
   const requestBody = {
     connection: "Username-Password-Authentication",
@@ -76,7 +78,7 @@ export async function DELETE(request) {
   const { user_id } = await request.json();
   const accessToken = await bearerToken();
   const requestUrl =
-    process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/users/" + user_id;
+    "https://" + process.env.AUTH0_DOMAIN + "/api/v2/users/" + user_id;
   const reqOptions = {
     method: "DELETE",
     headers: { Authorization: accessToken },

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth0 } from "./lib/auth0";
+import { auth0 } from "./app/lib/auth0";
 
 // export default withMiddlewareAuthRequired(async function middleware(req) {
 //   const user = await getSession(req);

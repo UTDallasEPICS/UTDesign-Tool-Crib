@@ -1,19 +1,21 @@
 import "./globals.css";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { auth0 } from "./lib/auth0";
+import { Auth0Provider } from "@auth0/nextjs-auth0";
 
 export const metadata = {
   title: "UTDesign Toolcrib Inventory",
   description: "Created by UTD EPICS students",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth0.getSession();
   return (
     <html lang="en">
-      <UserProvider>
+      <Auth0Provider user={session?.user}>
         <body>
           <main>{children}</main>
         </body>
-      </UserProvider>
+      </Auth0Provider>
     </html>
   );
 }

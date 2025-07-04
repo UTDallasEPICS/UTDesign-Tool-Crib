@@ -12,7 +12,11 @@ async function setAdmin(requestType, userID) {
 
   // Create
   const requestUrl =
-    process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/users/" + userID + "/roles";
+    "https://" +
+    process.env.AUTH0_DOMAIN +
+    "/api/v2/users/" +
+    userID +
+    "/roles";
   const requestBody = {
     roles: [adminID_string],
   };

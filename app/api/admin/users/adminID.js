@@ -12,7 +12,7 @@ export async function adminID() {
 
   // Fetch API token
   const rolesResponse = await fetch(
-    process.env.AUTH0_ISSUER_BASE_URL + "/api/v2/roles",
+    "https://" + process.env.AUTH0_DOMAIN + "/api/v2/roles",
     requestOptions
   );
 
