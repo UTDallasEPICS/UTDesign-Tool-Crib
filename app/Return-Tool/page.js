@@ -20,6 +20,7 @@ export default function ReturnTool() {
   const [teamNumber, setNumber] = useState("Select Team...");
   const [itemList, setItem] = useState([]);
   const [teamList, setTeamList] = useState([]);
+  const [textInputValue, setTextInputValue] = useState("");
   const textInput = useRef();
 
   const effectCalledRef = useRef(false);
@@ -54,10 +55,12 @@ export default function ReturnTool() {
         }),
       });
       if (res.status === 200) {
-        document.getElementById("teamnumber").setAttribute("value", null);
-        setNumber("");
+        // document.getElementById("teamnumber").setAttribute("value", null);
+        setNumber("Select Team...");
         setItem([]);
+        setTextInputValue("");
         mutate();
+        filterTools();
       } else {
         console.log(await res.json());
         alert("Failed to return items. Please try again.");
@@ -84,8 +87,8 @@ export default function ReturnTool() {
 
   const filterTools = () => {
     let input, filter, div, txtValue, a, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
+    // input = document.getElementById("myInput");
+    filter = textInputValue.toUpperCase();
     div = document.getElementById("tool-dropdown");
     a = div.getElementsByTagName("button");
     for (i = 0; i < a.length; i++) {
@@ -132,6 +135,8 @@ export default function ReturnTool() {
                 type="text"
                 placeholder="Search..."
                 onKeyUp={() => filterTools()}
+                value={textInputValue}
+                onChange={(e) => setTextInputValue(e.target.value)}
                 id="myInput"
                 ref={textInput}
               />
@@ -170,7 +175,7 @@ export default function ReturnTool() {
           <div>
             {/* <Link to="/"> */}
             <button id="remove-bttn" onClick={() => handleRemoveEvent()}>
-              Remove
+              Return
             </button>
             {/* </Link> */}
           </div>
