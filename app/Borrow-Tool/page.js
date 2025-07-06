@@ -92,12 +92,13 @@ export default function BorrowTool() {
       body: JSON.stringify({ log: log }),
     });
 
-    setTeamMember("Select Team Member");
+    // setTeamMember("Select Team Member");
     setToolName("Select Tool");
     setNotes("");
-    refactorTeamData("");
-    setTeamMembers([]);
-    setToolLimit(0);
+    // refactorTeamData("");
+    // setTeamMembers([]);
+    setToolId(0);
+    setToolLimit(currentToolLimit - 1);
     mutate();
     // document.getElementById("team-number-input").setAttribute("value", "");
 
