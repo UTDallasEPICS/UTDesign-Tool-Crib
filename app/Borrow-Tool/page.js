@@ -3,7 +3,7 @@ import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "./BorrowTools.css";
 import Header from "../Components/Header";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import useSWR from "swr";
 import DatePicker from "react-date-picker";
 import { useUser } from "@auth0/nextjs-auth0";
@@ -22,6 +22,18 @@ export default function BorrowTool() {
     "/api/tools",
     fetcher
   );
+
+  const effectCalledRef = useRef(false);
+  useEffect(() => {
+    if (!teamIsLoading && !effectCalledRef.current) {
+      const tempTeams = [
+        ...new Set(teamData.data.map((item) => item.teamNumber)),
+      ];
+      console.log(tempTeams);
+      setTeamList(tempTeams.sort());
+    }
+  }, [teamData, teamIsLoading]);
+
   const [teamId, setTeamId] = useState(-1);
   const [teamMembers, setTeamMembers] = useState([]);
   const [memberId, setMemberId] = useState(-1);
@@ -31,8 +43,11 @@ export default function BorrowTool() {
   const [currentToolLimit, setToolLimit] = useState(0);
   const [notes, setNotes] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
-  const [teamNumber, setTeamNumber] = useState("");
+  const [teamNumberSearch, setTeamNumberSearch] = useState("");
+  const [teamNumber, setTeamNumber] = useState("Select Team...");
   const [teamNumberIsValid, setValidTeam] = useState(false);
+  const [teamList, setTeamList] = useState([]);
+  const teamSearchBox = useRef();
 
   const refactorTeamData = (num) => {
     setTeamNumber(num);
@@ -53,6 +68,21 @@ export default function BorrowTool() {
         setToolLimit(0);
         setTeamMember("Select Team Member");
         setTeamMembers([]);
+      }
+    }
+  };
+
+  const filterTeams = () => {
+    let filter, div, txtValue, a, i;
+    filter = teamNumberSearch.toUpperCase();
+    div = document.getElementById("team-number-dropdown");
+    a = div.getElementsByTagName("button");
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
       }
     }
   };
@@ -105,6 +135,24 @@ export default function BorrowTool() {
     // window.location.reload();
   };
 
+  const handleTeamSearch = (searchText) => {
+    setTeamNumberSearch(searchText);
+    // refactorTeamData(searchText);
+  };
+
+  const handleSetTeam = (teamNumber) => {
+    const currentTeams = teamData.data.filter(
+      (item) => item.teamNumber.toUpperCase() == teamNumber.toUpperCase()
+    );
+    setTeamNumber(teamNumber);
+    setValidTeam(true);
+    setTeamMembers(currentTeams[0].teamMembers);
+    setToolLimit(currentTeams[0].tokens - currentTeams[0].tokensUsed);
+    setTeamMember("Select Team Member");
+    setMemberId(-1);
+    setTeamId(currentTeams[0].id);
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (!user) return <div>Not authenticated!</div>;
 
@@ -114,6 +162,49 @@ export default function BorrowTool() {
       <center>
         <div className="input-box">
           <label>Team Number</label>
+          <button
+            onClick={() => {
+              document
+                .getElementById("team-number-dropdown")
+                .classList.toggle("show");
+              teamSearchBox.current.focus();
+            }}
+            className="drop-btn"
+            style={{ marginBottom: "2em" }}
+          >
+            {teamNumber}
+          </button>
+          <div className="dropdown">
+            <div id="team-number-dropdown" className="dropdown-content">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={teamNumberSearch}
+                onKeyUp={() => filterTeams()}
+                onChange={(e) => handleTeamSearch(e.target.value)}
+                id="myTeamInput"
+                ref={teamSearchBox}
+              />
+              {isLoading
+                ? "Loading..."
+                : teamList.map((entry) => (
+                    <div key={entry}>
+                      <button
+                        onClick={() => {
+                          console.log(teamNumber);
+                          document
+                            .getElementById("team-number-dropdown")
+                            .classList.toggle("show");
+                          handleSetTeam(entry);
+                        }}
+                      >
+                        {entry}
+                      </button>
+                    </div>
+                  ))}
+            </div>
+          </div>
+          {/* <label>Team Number</label>
           <input
             id="team-number-input"
             type="text"
@@ -121,7 +212,7 @@ export default function BorrowTool() {
             className={teamNumberIsValid ? null : "invalid"}
             value={teamNumber}
             onChange={(event) => refactorTeamData(event.target.value)}
-          />
+          /> */}
           <label>Tool Checkouts Remaining</label>
           <input type="text" value={currentToolLimit} readOnly={true} />
           <label>Team Member</label>
