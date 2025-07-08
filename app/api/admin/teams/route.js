@@ -116,6 +116,7 @@ export async function POST(request) {
         teamNumber: team.teamNumber,
         tableNumber: team.tableNumber,
         tokens: team.tokens,
+        notes: "",
       },
     });
 

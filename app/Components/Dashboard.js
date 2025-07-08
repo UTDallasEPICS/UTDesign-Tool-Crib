@@ -7,6 +7,7 @@ import { writeFile, utils } from "xlsx";
 // import UpdateCheckout from "@/Components/UpdateCheckout";
 import { useState } from "react";
 import DatePicker from "react-date-picker";
+import { useUser } from "@auth0/nextjs-auth0";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -22,6 +23,20 @@ export default function Dashboard() {
 
   const [currentEditId, setCurrentEditId] = useState(0);
   const [currentDueDate, setCurrentDueDate] = useState(new Date());
+  const [currentStrikeID, setCurrentStrikeId] = useState(0);
+
+  const handleCancelOrStrike = (id) => {
+    if (currentStrikeID != 0) {
+      setCurrentStrikeId(0);
+      return;
+    }
+    if (currentEditId != 0) {
+      setCurrentEditId(0);
+      return;
+    }
+
+    setCurrentStrikeId(id);
+  };
 
   const handleDateUpdate = async (logId, theDueDate) => {
     const reqData = {
@@ -38,7 +53,7 @@ export default function Dashboard() {
     mutate();
   };
 
-  const editCheckoutEvent = (id, dueDate) => {
+  const editCheckoutEvent = (id, dueDate, teamId) => {
     // console.log(id);
     if (currentEditId != 0 && id == currentEditId) {
       // const basicDueDate = new Date(currentDueDate);
@@ -46,11 +61,24 @@ export default function Dashboard() {
       // console.log(theDueDate);
       handleDateUpdate(id, theDueDate);
       setCurrentEditId(0);
-    } else {
-      // console.log(dueDate);
-      setCurrentDueDate(new Date(dueDate));
-      setCurrentEditId(id);
+      return;
     }
+
+    if (currentStrikeID != 0 && id == currentStrikeID) {
+      addStrike(teamId);
+      setCurrentStrikeId(0);
+      return;
+    }
+    // console.log(dueDate);
+    setCurrentDueDate(new Date(dueDate));
+    setCurrentEditId(id);
+  };
+
+  const addStrike = async (teamId) => {
+    const apiString = "/api/teams/strikes/add/" + String(teamId);
+    const res = await fetch(apiString);
+    console.log(await res.json());
+    mutate();
   };
 
   const logCleanup = (logIn) => {
@@ -163,26 +191,41 @@ export default function Dashboard() {
                   <p>{item.notes}</p>
                 </div>
                 <div className="cell">
-                  <p>
-                    <button
-                      onClick={() => {
-                        // console.log(item);
-                        editCheckoutEvent(item.id, item.dateDue);
-                      }}
-                    >
-                      {item.id === currentEditId ? "Submit" : "Edit"}
-                    </button>
-                    {item.id === currentEditId ? (
-                      <button
-                        style={{ marginTop: "1em" }}
-                        onClick={() => setCurrentEditId(0)}
+                  {/* <p> */}
+                  <div>
+                    <div className="column-grid">
+                      <div className="cell" style={{ borderStyle: "none" }}>
+                        <button
+                          onClick={() => {
+                            // console.log(item);
+                            // console.log(user);
+                            editCheckoutEvent(
+                              item.id,
+                              item.dateDue,
+                              item.teamId
+                            );
+                          }}
+                        >
+                          {item.id === currentEditId ||
+                          item.id == currentStrikeID
+                            ? "Submit"
+                            : "Edit"}
+                        </button>
+                      </div>
+                      <div
+                        className="cell"
+                        style={{ borderStyle: "none", padding: "0" }}
                       >
-                        Cancel
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </p>
+                        <button onClick={() => handleCancelOrStrike(item.id)}>
+                          {item.id === currentEditId ||
+                          item.id == currentStrikeID
+                            ? "Cancel"
+                            : "Strike"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  {/* </p> */}
                 </div>
               </div>
             ))}
