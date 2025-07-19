@@ -108,7 +108,7 @@ export default function BorrowTool() {
     if (numStrikes >= 3) {
       if (
         !window.confirm(
-          `This team has ${numStrikes} strikes. Are you sure you want to let them check out this tool?`
+          `Woah there, bud...this team has ${numStrikes} strikes. Are you sure you want to let them check out this tool?`
         )
       ) {
         return;
@@ -139,7 +139,6 @@ export default function BorrowTool() {
     // setTeamMembers([]);
     setToolId(0);
     setToolLimit(currentToolLimit - 1);
-    setNumStrikes(0);
     mutate();
     // document.getElementById("team-number-input").setAttribute("value", "");
 
