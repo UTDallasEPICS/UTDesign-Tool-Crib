@@ -191,6 +191,7 @@ export default function ManageTeams() {
           <div className="cell">Table Number</div>
           <div className="cell">Team Members</div>
           <div className="cell">Tokens</div>
+          <div className="cell">Strikes</div>
           <div className="cell">Options</div>
         </div>
         {/* {editUserHtml(currentEditingId)} */}
@@ -221,6 +222,7 @@ export default function ManageTeams() {
                   </div>
 
                   <div className="cell-2">{item.tokens}</div>
+                  <div className="cell-2">{item.strikeCount}</div>
                   <div className="cell-2">
                     <button
                       onClick={() => {
