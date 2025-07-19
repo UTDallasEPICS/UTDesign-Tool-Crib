@@ -50,6 +50,7 @@ export async function PATCH(request) {
     data: {
       tableNumber: team.tableNumber,
       tokens: team.tokens,
+      strikeCount: team.strikeCount,
     },
   });
 

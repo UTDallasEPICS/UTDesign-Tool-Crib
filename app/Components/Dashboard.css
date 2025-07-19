@@ -1,5 +1,6 @@
 .dashboard {
   color: #154734;
+  margin-bottom: 1em;
 }
 
 .grid {
@@ -12,7 +13,7 @@
 
 .column-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /*1fr;*/
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr; /*1fr;*/
 }
 
 .cell {
@@ -29,7 +30,7 @@
 
 .column-grid-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* 1fr;*/
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr; /* 1fr;*/
   background-color: #154734;
   color: white;
 }

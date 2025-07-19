@@ -216,12 +216,16 @@ export default function Dashboard() {
                         className="cell"
                         style={{ borderStyle: "none", padding: "0" }}
                       >
-                        <button onClick={() => handleCancelOrStrike(item.id)}>
-                          {item.id === currentEditId ||
-                          item.id == currentStrikeID
-                            ? "Cancel"
-                            : "Strike"}
-                        </button>
+                        {new Date(item.dateDue) < loadTime ||
+                        item.id === currentEditId ||
+                        item.id == currentStrikeID ? (
+                          <button onClick={() => handleCancelOrStrike(item.id)}>
+                            {item.id === currentEditId ||
+                            item.id == currentStrikeID
+                              ? "Cancel"
+                              : "Strike"}
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                   </div>

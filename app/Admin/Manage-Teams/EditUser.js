@@ -21,12 +21,14 @@ export default function EditUser({ userData, setEditId, mutateTeams }) {
     const teamId = userData["id"];
     const tableNumber = Number(document.getElementById("tablenumber").value);
     const tokenNumber = Number(document.getElementById("tokennumber").value);
+    const strikeNumber = Number(document.getElementById("strikenumber".value));
     const teamData = {
       teamId: teamId,
       tableNumber: tableNumber,
       tokens: tokenNumber,
       newMembers: teamMembersValues.filter(Boolean),
       removeMembers: removedMembers,
+      strikeCount: strikeNumber,
     };
     // Send request to update team data
     const res = await fetch("/api/admin/teams", {
@@ -94,8 +96,14 @@ export default function EditUser({ userData, setEditId, mutateTeams }) {
         +
       </button>
 
-      <p>Token</p>
+      <p>Tokens</p>
       <input type="text" id="tokennumber" defaultValue={userData["tokens"]} />
+      <p>Strikes</p>
+      <input
+        type="text"
+        id="strikenumber"
+        defaultValue={userData["strikeCount"]}
+      />
       <button onClick={editUserEvent}>Submit</button>
       <button
         onClick={() => {

@@ -41,6 +41,7 @@ export default function BorrowTool() {
   const [toolId, setToolId] = useState(-1);
   const [currentTool, setToolName] = useState("Select Tool");
   const [currentToolLimit, setToolLimit] = useState(0);
+  const [numStrikes, setNumStrikes] = useState(0);
   const [notes, setNotes] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
   const [teamNumberSearch, setTeamNumberSearch] = useState("");
@@ -104,6 +105,15 @@ export default function BorrowTool() {
   };
 
   const submitLogEvent = async () => {
+    if (numStrikes >= 3) {
+      if (
+        !window.confirm(
+          `This team has ${numStrikes} strikes. Are you sure you want to let them check out this tool?`
+        )
+      ) {
+        return;
+      }
+    }
     // Set to current date at 11:59 PM
     const theDate = new Date(dueDate.setHours(23, 59));
     // Create log entry data
@@ -129,6 +139,7 @@ export default function BorrowTool() {
     // setTeamMembers([]);
     setToolId(0);
     setToolLimit(currentToolLimit - 1);
+    setNumStrikes(0);
     mutate();
     // document.getElementById("team-number-input").setAttribute("value", "");
 
@@ -148,6 +159,7 @@ export default function BorrowTool() {
     setValidTeam(true);
     setTeamMembers(currentTeams[0].teamMembers);
     setToolLimit(currentTeams[0].tokens - currentTeams[0].tokensUsed);
+    setNumStrikes(currentTeams[0].strikeCount);
     setTeamMember("Select Team Member");
     setMemberId(-1);
     setTeamId(currentTeams[0].id);
@@ -215,6 +227,8 @@ export default function BorrowTool() {
           /> */}
           <label>Tool Checkouts Remaining</label>
           <input type="text" value={currentToolLimit} readOnly={true} />
+          <label>Team Strikes</label>
+          <input type="text" value={numStrikes} readOnly={true} />
           <label>Team Member</label>
           <div className="dropdown">
             <button
