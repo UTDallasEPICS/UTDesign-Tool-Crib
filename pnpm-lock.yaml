@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@auth0/nextjs-auth0':
         specifier: ~4.8.0
-        version: 4.8.0(next@15.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 4.8.0(next@15.4.5(react-dom@19.1.0(react@19.1.1))(react@19.1.1))(react-dom@19.1.0(react@19.1.1))(react@19.1.1)
       '@prisma/client':
         specifier: ^6.12.0
         version: 6.12.0(prisma@6.12.0(typescript@5.8.3))(typescript@5.8.3)
@@ -25,19 +25,19 @@ importers:
         version: 15.4.2(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
       next:
         specifier: ~15.4.5
-        version: 15.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.5(react-dom@19.1.0(react@19.1.1))(react@19.1.1)
       react:
-        specifier: 19.1.0
-        version: 19.1.0
+        specifier: 19.1.1
+        version: 19.1.1
       react-date-picker:
         specifier: ^11.0.0
-        version: 11.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 11.0.0(react-dom@19.1.0(react@19.1.1))(react@19.1.1)
       react-dom:
         specifier: 19.1.0
-        version: 19.1.0(react@19.1.0)
+        version: 19.1.0(react@19.1.1)
       swr:
         specifier: ^2.3.4
-        version: 2.3.4(react@19.1.0)
+        version: 2.3.4(react@19.1.1)
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -1453,8 +1453,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react@19.1.0:
-    resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
+  react@19.1.1:
+    resolution: {integrity: sha512-w8nqGImo45dmMIfljjMwOGtbmC/mk4CMYhWIicdSflH91J9TyCyczcPFXJzrZ/ZXcgGRFeP6BU0BEJTw6tZdfQ==}
     engines: {node: '>=0.10.0'}
 
   reflect.getprototypeof@1.0.10:
@@ -1726,16 +1726,16 @@ packages:
 
 snapshots:
 
-  '@auth0/nextjs-auth0@4.8.0(next@15.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@auth0/nextjs-auth0@4.8.0(next@15.4.5(react-dom@19.1.0(react@19.1.1))(react@19.1.1))(react-dom@19.1.0(react@19.1.1))(react@19.1.1)':
     dependencies:
       '@edge-runtime/cookies': 5.0.2
       '@panva/hkdf': 1.2.1
       jose: 5.10.0
-      next: 15.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next: 15.4.5(react-dom@19.1.0(react@19.1.1))(react@19.1.1)
       oauth4webapi: 3.6.0
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      swr: 2.3.4(react@19.1.0)
+      react: 19.1.1
+      react-dom: 19.1.0(react@19.1.1)
+      swr: 2.3.4(react@19.1.1)
 
   '@edge-runtime/cookies@5.0.2': {}
 
@@ -3077,15 +3077,15 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@15.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next@15.4.5(react-dom@19.1.0(react@19.1.1))(react@19.1.1):
     dependencies:
       '@next/env': 15.4.5
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001731
       postcss: 8.4.31
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      styled-jsx: 5.1.6(react@19.1.0)
+      react: 19.1.1
+      react-dom: 19.1.0(react@19.1.1)
+      styled-jsx: 5.1.6(react@19.1.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.4.5
       '@next/swc-darwin-x64': 15.4.5
@@ -3212,44 +3212,44 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-calendar@5.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-calendar@5.1.0(react-dom@19.1.0(react@19.1.1))(react@19.1.1):
     dependencies:
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.1
       get-user-locale: 2.3.2
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
+      react: 19.1.1
+      react-dom: 19.1.0(react@19.1.1)
       warning: 4.0.3
 
-  react-date-picker@11.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-date-picker@11.0.0(react-dom@19.1.0(react@19.1.1))(react@19.1.1):
     dependencies:
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.1
       get-user-locale: 2.3.2
       make-event-props: 1.6.2
-      react: 19.1.0
-      react-calendar: 5.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react-dom: 19.1.0(react@19.1.0)
-      react-fit: 2.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.1
+      react-calendar: 5.1.0(react-dom@19.1.0(react@19.1.1))(react@19.1.1)
+      react-dom: 19.1.0(react@19.1.1)
+      react-fit: 2.0.1(react-dom@19.1.0(react@19.1.1))(react@19.1.1)
       update-input-width: 1.4.2
     transitivePeerDependencies:
       - '@types/react-dom'
 
-  react-dom@19.1.0(react@19.1.0):
+  react-dom@19.1.0(react@19.1.1):
     dependencies:
-      react: 19.1.0
+      react: 19.1.1
       scheduler: 0.26.0
 
-  react-fit@2.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-fit@2.0.1(react-dom@19.1.0(react@19.1.1))(react@19.1.1):
     dependencies:
       detect-element-overflow: 1.4.2
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
+      react: 19.1.1
+      react-dom: 19.1.0(react@19.1.1)
       warning: 4.0.3
 
   react-is@16.13.1: {}
 
-  react@19.1.0: {}
+  react@19.1.1: {}
 
   reflect.getprototypeof@1.0.10:
     dependencies:
@@ -3472,10 +3472,10 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-jsx@5.1.6(react@19.1.0):
+  styled-jsx@5.1.6(react@19.1.1):
     dependencies:
       client-only: 0.0.1
-      react: 19.1.0
+      react: 19.1.1
 
   supports-color@7.2.0:
     dependencies:
@@ -3483,11 +3483,11 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  swr@2.3.4(react@19.1.0):
+  swr@2.3.4(react@19.1.1):
     dependencies:
       dequal: 2.0.3
-      react: 19.1.0
-      use-sync-external-store: 1.5.0(react@19.1.0)
+      react: 19.1.1
+      use-sync-external-store: 1.5.0(react@19.1.1)
 
   tinyglobby@0.2.14:
     dependencies:
@@ -3587,9 +3587,9 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-sync-external-store@1.5.0(react@19.1.0):
+  use-sync-external-store@1.5.0(react@19.1.1):
     dependencies:
-      react: 19.1.0
+      react: 19.1.1
 
   warning@4.0.3:
     dependencies:
