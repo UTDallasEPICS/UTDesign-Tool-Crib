@@ -39,10 +39,11 @@ export async function PATCH(request) {
       teamId: team.teamId,
     });
   });
+
   const newStudentRes = await prisma.student.createMany({
     data: newMembers,
   });
-  // console.log(newStudentRes)
+
   const teamRes = await prisma.team.update({
     where: {
       id: team.teamId,
@@ -51,8 +52,11 @@ export async function PATCH(request) {
       tableNumber: team.tableNumber,
       tokens: team.tokens,
       strikeCount: team.strikeCount,
+      strikeTime: team.strikeTime,
     },
   });
+
+  console.log(team);
 
   return NextResponse.json({
     newTeam: teamRes,
@@ -63,12 +67,11 @@ export async function PATCH(request) {
 
 export async function POST(request) {
   const { team } = await request.json();
-  // console.log(team);
   const teamExists = await prisma.team.findFirst({
     where: { teamNumber: team.teamNumber },
     include: { teamMembers: { select: { id: true } } },
   });
-  // console.log(teamExists);
+
   let teamRes;
   if (teamExists) {
     let teamMembers = [];
@@ -81,7 +84,7 @@ export async function POST(request) {
     const studentRes = await prisma.student.createMany({
       data: teamMembers,
     });
-    // console.log(teamExists.teamMembers);
+
     teamRes = await prisma.team.update({
       where: {
         id: teamExists.id,
@@ -95,22 +98,7 @@ export async function POST(request) {
       },
     });
 
-    // console.log(teamRes);
-    // console.log(teamExists);
-    // console.log(teamExists.teamMembers);
     const removeIds = teamExists.teamMembers.map((e) => e.id);
-    // console.log(removeIds);
-    // Remove Current students
-    // const studentRemoveRes = await prisma.student.updateMany({
-    //   where: {
-    //     id: {
-    //       in: removeIds,
-    //     },
-    //   },
-    //   data: {
-    //     teamId: { set: null },
-    //   },
-    // });
   } else {
     teamRes = await prisma.team.create({
       data: {

@@ -31,6 +31,7 @@ model Team {
   tokensUsed  Int       @default(0)
   isActive    Boolean   @default(true)
   strikeCount Int       @default(0)
+  strikeTime  DateTime  @default("2000-01-01T00:00:00Z")
   notes       String?   @db.Text
   // Relations
   teamMembers Student[]

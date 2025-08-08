@@ -45,6 +45,7 @@ export default function BorrowTool() {
   const [notes, setNotes] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
   const [teamNumberSearch, setTeamNumberSearch] = useState("");
+  const [strikeTime, setStrikeTime] = useState(new Date());
   const [teamNumber, setTeamNumber] = useState("Select Team...");
   const [teamNumberIsValid, setValidTeam] = useState(false);
   const [teamList, setTeamList] = useState([]);
@@ -104,13 +105,54 @@ export default function BorrowTool() {
     }
   };
 
+  const getStrikeActive = (strikeTime, strikeLength) => {
+    const currentTime = new Date();
+    const strikeExpire = new Date(strikeTime);
+    strikeExpire.setDate(strikeExpire.getDate() + strikeLength);
+    console.log(strikeExpire);
+    if (strikeExpire > currentTime) {
+      return true;
+    }
+    return false;
+  };
+
   const submitLogEvent = async () => {
-    if (numStrikes >= 3) {
-      if (
-        !window.confirm(
-          `Woah there, bud...this team has ${numStrikes} strikes. Are you sure you want to let them check out this tool?`
-        )
-      ) {
+    let strikeFlag = false;
+    if (numStrikes === 1) {
+      strikeFlag = getStrikeActive(strikeTime, 1);
+    } else if (numStrikes === 2) {
+      strikeFlag = getStrikeActive(strikeTime, 7);
+    } else if (numStrikes >= 3) {
+      strikeFlag = getStrikeActive(strikeTime, 30);
+    }
+
+    if (strikeFlag) {
+      let warning = "";
+      console.log(user);
+      if (user.email.toLowerCase().includes("ams")) {
+        if (numStrikes === 1) {
+          warning =
+            "Gene, this team has a strike...you emailed them this morning and already forgot?";
+        } else if (numStrikes === 2) {
+          warning = "Cmon, Gene, read the box...they've got 2 strikes.";
+        } else if (numStrikes === 3) {
+          warning =
+            "Gene, if you check out this tool...you're not gonna get it back. They have 3 strikes and zero respect for your s***.";
+        } else {
+          warning = `You didn't take my advice Gene. I told you they wouldn't return the tool last time. Now look what happened: strike ${numStrikes}!`;
+        }
+      } else {
+        if (numStrikes === 1) {
+          warning =
+            "Hey there bud, this team got a strike this morning. They can't check out a tool until tomorrow. Better check with your boss on this one.";
+        } else if (numStrikes === 2) {
+          warning =
+            "So here's the deal: this team has 2 strikes. They're probably gonna forget to bring this tool back to you.";
+        } else {
+          warning = `OOF buddy...this team has ${numStrikes} strikes. Probably aught to let 'em cool down before you go giving them any more tools.`;
+        }
+      }
+      if (!window.confirm(warning)) {
         return;
       }
     }
@@ -159,6 +201,7 @@ export default function BorrowTool() {
     setTeamMembers(currentTeams[0].teamMembers);
     setToolLimit(currentTeams[0].tokens - currentTeams[0].tokensUsed);
     setNumStrikes(currentTeams[0].strikeCount);
+    setStrikeTime(new Date(currentTeams[0].strikeTime));
     setTeamMember("Select Team Member");
     setMemberId(-1);
     setTeamId(currentTeams[0].id);
