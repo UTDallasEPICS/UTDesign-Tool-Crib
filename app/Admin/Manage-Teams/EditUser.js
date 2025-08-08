@@ -21,7 +21,16 @@ export default function EditUser({ userData, setEditId, mutateTeams }) {
     const teamId = userData["id"];
     const tableNumber = Number(document.getElementById("tablenumber").value);
     const tokenNumber = Number(document.getElementById("tokennumber").value);
-    const strikeNumber = Number(document.getElementById("strikenumber".value));
+    const strikeNumber = Number(document.getElementById("strikenumber").value);
+    const strikeTime = new Date();
+    strikeTime.setHours(0, 0, 0, 0);
+    if (strikeNumber < Number(userData["strikeCount"])) {
+      strikeTime.setDate(strikeTime.getDate() - 1000);
+    }
+    console.log(strikeNumber);
+    console.log(userData["strikeCount"]);
+    console.log(strikeTime);
+
     const teamData = {
       teamId: teamId,
       tableNumber: tableNumber,
@@ -29,6 +38,7 @@ export default function EditUser({ userData, setEditId, mutateTeams }) {
       newMembers: teamMembersValues.filter(Boolean),
       removeMembers: removedMembers,
       strikeCount: strikeNumber,
+      strikeTime: strikeTime.toISOString(),
     };
     // Send request to update team data
     const res = await fetch("/api/admin/teams", {
