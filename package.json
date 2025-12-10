@@ -14,7 +14,7 @@
     "prismaGenerate": "dotenv -e .env.local prisma generate"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "~4.9.0",
+    "@auth0/nextjs-auth0": "~4.13.0",
     "@prisma/client": "^6.13.0",
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.32.0",
